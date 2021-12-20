@@ -68,6 +68,19 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         XCTAssertEqual(client.urlRequests, [request.url(baseURL: makeAnyURL())])
     }
     
+    func test_loadTwice_requestsDataFromURLTwice() {
+        let (sut, client) = makeSUT()
+        
+        let request = makePopularMoviesRequest()
+        sut.load(request) { _ in }
+        
+        XCTAssertEqual(client.urlRequests, [request.url(baseURL: makeAnyURL())])
+        
+        sut.load(request) { _ in }
+        
+        XCTAssertEqual(client.urlRequests, [request.url(baseURL: makeAnyURL()), request.url(baseURL: makeAnyURL())])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> (sut: RemotePopularMoviesLoader, client: HTTPClientSpy) {
