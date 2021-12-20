@@ -11,6 +11,7 @@
 		CEBB4A5B2770584E00065A36 /* PopularCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A5A2770584E00065A36 /* PopularCollection.swift */; };
 		CEBB4A5D27705BCF00065A36 /* PopularMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A5C27705BCF00065A36 /* PopularMoviesLoader.swift */; };
 		CEBB4A6227705D0000065A36 /* RemotePopularMoviesLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A6127705D0000065A36 /* RemotePopularMoviesLoaderTests.swift */; };
+		CEBB4A65277089B600065A36 /* XCTestCase+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A64277089B600065A36 /* XCTestCase+TestHelpers.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 		CEDA257B2770528100452221 /* ShowTimeCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDA257A2770528100452221 /* ShowTimeCoreTests.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		CEBB4A5A2770584E00065A36 /* PopularCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollection.swift; sourceTree = "<group>"; };
 		CEBB4A5C27705BCF00065A36 /* PopularMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesLoader.swift; sourceTree = "<group>"; };
 		CEBB4A6127705D0000065A36 /* RemotePopularMoviesLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePopularMoviesLoaderTests.swift; sourceTree = "<group>"; };
+		CEBB4A64277089B600065A36 /* XCTestCase+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+TestHelpers.swift"; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA257A2770528100452221 /* ShowTimeCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTimeCoreTests.swift; sourceTree = "<group>"; };
@@ -95,6 +97,14 @@
 			path = "Popular Collection";
 			sourceTree = "<group>";
 		};
+		CEBB4A63277089A700065A36 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A64277089B600065A36 /* XCTestCase+TestHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		CEDA25632770528000452221 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +134,7 @@
 		CEDA25792770528100452221 /* ShowTimeCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4A63277089A700065A36 /* Helpers */,
 				CEBB4A5F27705CD000065A36 /* Network */,
 				CEBB4A5E27705C9A00065A36 /* Features */,
 				CEDA257A2770528100452221 /* ShowTimeCoreTests.swift */,
@@ -250,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4A65277089B600065A36 /* XCTestCase+TestHelpers.swift in Sources */,
 				CEDA257B2770528100452221 /* ShowTimeCoreTests.swift in Sources */,
 				CEBB4A6227705D0000065A36 /* RemotePopularMoviesLoaderTests.swift in Sources */,
 			);

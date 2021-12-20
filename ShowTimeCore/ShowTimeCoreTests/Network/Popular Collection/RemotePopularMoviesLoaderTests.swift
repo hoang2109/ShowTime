@@ -181,13 +181,15 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT() -> (sut: RemotePopularMoviesLoader, client: HTTPClientSpy) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemotePopularMoviesLoader, client: HTTPClientSpy) {
         let baseURL = makeAnyURL()
         let client = HTTPClientSpy()
         let sut = RemotePopularMoviesLoader(client: client) { request in
             let url = APIEndpoint.popularMovies(page: request.page, language: request.language).url(baseURL: baseURL)
             return URLRequest(url: url)
         }
+        trackForMemoryLeaks(client, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, client)
     }
     
