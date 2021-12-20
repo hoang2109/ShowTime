@@ -114,6 +114,17 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         }
     }
     
+    func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() {
+        let (sut, client) = makeSUT()
+        
+        let (url, request) = makePopularMoviesRequest()
+        let invalidData = Data("invalid json".utf8)
+        
+        expect(sut, request: request, toCompleteWithResult: .failure(RemotePopularMoviesLoader.Error.invalidData)) {
+            client.complete(with: invalidData, response: makeHTTPURLResponse(url: url))
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> (sut: RemotePopularMoviesLoader, client: HTTPClientSpy) {
