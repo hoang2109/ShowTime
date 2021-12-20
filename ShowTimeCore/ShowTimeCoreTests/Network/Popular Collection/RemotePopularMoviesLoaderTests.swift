@@ -167,6 +167,18 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         }
     }
     
+    func test_load_deliversPopularCollectionOn200HTTPResponseWithJSONItems() {
+        let (sut, client) = makeSUT()
+        
+        let (url, request) = makePopularMoviesRequest()
+        let (collection, json) = makePopularCollection()
+        let resposne = makeHTTPURLResponse(url: url)
+        
+        expect(sut, request: request, toCompleteWithResult: .success(collection)) {
+            client.complete(with: makeJSONData(json), response: resposne)
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> (sut: RemotePopularMoviesLoader, client: HTTPClientSpy) {
