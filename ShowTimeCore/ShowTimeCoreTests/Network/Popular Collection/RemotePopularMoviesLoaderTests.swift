@@ -33,6 +33,10 @@ class RemotePopularMoviesLoader: PopularMoviesLoader {
     private let client: HTTPClient
     private let makeRequest: (PopularMoviesRequest) -> URLRequest
     
+    public enum Error: Swift.Error, Equatable {
+        case connectivity
+    }
+    
     init(client: HTTPClient, makeRequest: @escaping (PopularMoviesRequest) -> URLRequest) {
         self.client = client
         self.makeRequest = makeRequest
@@ -41,7 +45,7 @@ class RemotePopularMoviesLoader: PopularMoviesLoader {
     func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
         let request = makeRequest(request)
         client.request(request) { _ in
-            
+            completion(.failure(Error.connectivity))
         }
     }
 }
@@ -65,7 +69,7 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         let request = makePopularMoviesRequest()
         sut.load(request) { _ in }
         
-        XCTAssertEqual(client.urlRequests, [request.url(baseURL: makeAnyURL())])
+        XCTAssertEqual(client.requestedURLs, [request.url(baseURL: makeAnyURL())])
     }
     
     func test_loadTwice_requestsDataFromURLTwice() {
@@ -74,11 +78,21 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         let request = makePopularMoviesRequest()
         sut.load(request) { _ in }
         
-        XCTAssertEqual(client.urlRequests, [request.url(baseURL: makeAnyURL())])
+        XCTAssertEqual(client.requestedURLs, [request.url(baseURL: makeAnyURL())])
         
         sut.load(request) { _ in }
         
-        XCTAssertEqual(client.urlRequests, [request.url(baseURL: makeAnyURL()), request.url(baseURL: makeAnyURL())])
+        XCTAssertEqual(client.requestedURLs, [request.url(baseURL: makeAnyURL()), request.url(baseURL: makeAnyURL())])
+    }
+    
+    func test_load_deliversErrorOnClientError() {
+        let (sut, client) = makeSUT()
+        
+        let request = makePopularMoviesRequest()
+        
+        expect(sut, request: request, toCompleteWithResult: .failure(RemotePopularMoviesLoader.Error.connectivity)) {
+            client.complete(with: anyNSError())
+        }
     }
     
     // MARK: - Helpers
@@ -93,6 +107,29 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         return (sut, client)
     }
     
+    private func expect(_ sut: RemotePopularMoviesLoader, request: PopularMoviesRequest, toCompleteWithResult expectedResult: RemotePopularMoviesLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for load completion")
+        sut.load(request) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedItem), .success(expectedItem)):
+                XCTAssertEqual(receivedItem, expectedItem, file: file, line: line)
+
+            case let (.failure(receivedError as RemotePopularMoviesLoader.Error), .failure(expectedError as RemotePopularMoviesLoader.Error)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+
+            default:
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
+            }
+
+            exp.fulfill()
+        }
+        
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     private func makePopularMoviesRequest(page: Int = 1, language: String = "en-US") -> PopularMoviesRequest {
         PopularMoviesRequest(page: page, language: language)
     }
@@ -105,12 +142,29 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         URL(string: "http://any-url.com")!
     }
     
+    private func anyNSError() -> NSError {
+        NSError(domain: "any error", code: 0)
+    }
+    
     private class HTTPClientSpy: HTTPClient {
-        private(set) var urlRequests = [URL?]()
-        private(set) var requestCallCount = 0
+        
+        private var requests = [(request: URLRequest, completion: (HTTPClient.Result) -> Void)]()
+        
+        var requestedURLs: [URL?] {
+            requests.map {
+                $0.0.url
+            }
+        }
+        var requestCallCount: Int {
+            requests.count
+        }
         
         func request(_ request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) {
-            urlRequests.append(request.url)
+            requests.append((request, completion))
+        }
+        
+        func complete(with error: NSError, at index: Int = 0) {
+            requests[index].completion(.failure(error))
         }
     }
 }
@@ -121,3 +175,13 @@ private extension PopularMoviesRequest {
     }
 }
 
+private extension Result {
+    var error: Failure? {
+        switch self {
+        case let .failure(error):
+            return error
+        case .success:
+            return nil
+        }
+    }
+}

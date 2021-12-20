@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PopularCollection {
+public struct PopularCollection: Equatable {
     public let items: [Movie]
     public let page: Int
     public let totalPages: Int
