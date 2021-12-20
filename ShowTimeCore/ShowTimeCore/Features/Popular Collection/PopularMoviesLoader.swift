@@ -20,6 +20,6 @@ public struct PopularMoviesRequest {
 public protocol PopularMoviesLoader {
     typealias Result = Swift.Result<PopularCollection, Error>
     
-    func load(_ request: PopularMoviesRequest, completion: (Result) -> Void)
+    func load(_ request: PopularMoviesRequest, completion: @escaping (Result) -> Void)
 }
 
