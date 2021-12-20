@@ -12,8 +12,14 @@
 		CEBB4A5D27705BCF00065A36 /* PopularMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A5C27705BCF00065A36 /* PopularMoviesLoader.swift */; };
 		CEBB4A6227705D0000065A36 /* RemotePopularMoviesLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A6127705D0000065A36 /* RemotePopularMoviesLoaderTests.swift */; };
 		CEBB4A65277089B600065A36 /* XCTestCase+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A64277089B600065A36 /* XCTestCase+TestHelpers.swift */; };
+		CEBB4A6A27708F6300065A36 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A6927708F6300065A36 /* APIEndpoint.swift */; };
+		CEBB4A6C27708F8500065A36 /* RemotePopularMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A6B27708F8500065A36 /* RemotePopularMoviesLoader.swift */; };
+		CEBB4A6F27708FCB00065A36 /* PopularMoviesMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A6E27708FCB00065A36 /* PopularMoviesMapper.swift */; };
+		CEBB4A712770900C00065A36 /* RemotePopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A702770900C00065A36 /* RemotePopularMovies.swift */; };
+		CEBB4A732770902600065A36 /* RemoteMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A722770902600065A36 /* RemoteMovie.swift */; };
+		CEBB4A76277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A75277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift */; };
+		CEBB4A782770918800065A36 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A772770918800065A36 /* HTTPClient.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
-		CEDA257B2770528100452221 /* ShowTimeCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDA257A2770528100452221 /* ShowTimeCoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,9 +38,15 @@
 		CEBB4A5C27705BCF00065A36 /* PopularMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesLoader.swift; sourceTree = "<group>"; };
 		CEBB4A6127705D0000065A36 /* RemotePopularMoviesLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePopularMoviesLoaderTests.swift; sourceTree = "<group>"; };
 		CEBB4A64277089B600065A36 /* XCTestCase+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+TestHelpers.swift"; sourceTree = "<group>"; };
+		CEBB4A6927708F6300065A36 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		CEBB4A6B27708F8500065A36 /* RemotePopularMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePopularMoviesLoader.swift; sourceTree = "<group>"; };
+		CEBB4A6E27708FCB00065A36 /* PopularMoviesMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesMapper.swift; sourceTree = "<group>"; };
+		CEBB4A702770900C00065A36 /* RemotePopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePopularMovies.swift; sourceTree = "<group>"; };
+		CEBB4A722770902600065A36 /* RemoteMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovie.swift; sourceTree = "<group>"; };
+		CEBB4A75277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopularMoviesRequest+TestHelpers.swift"; sourceTree = "<group>"; };
+		CEBB4A772770918800065A36 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEDA257A2770528100452221 /* ShowTimeCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTimeCoreTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,13 +86,6 @@
 			path = "Popular Collection";
 			sourceTree = "<group>";
 		};
-		CEBB4A5E27705C9A00065A36 /* Features */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Features;
-			sourceTree = "<group>";
-		};
 		CEBB4A5F27705CD000065A36 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +97,7 @@
 		CEBB4A6027705CDA00065A36 /* Popular Collection */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4A74277090CE00065A36 /* Helpers */,
 				CEBB4A6127705D0000065A36 /* RemotePopularMoviesLoaderTests.swift */,
 			);
 			path = "Popular Collection";
@@ -101,6 +107,51 @@
 			isa = PBXGroup;
 			children = (
 				CEBB4A64277089B600065A36 /* XCTestCase+TestHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		CEBB4A6627708F3B00065A36 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A6827708F5B00065A36 /* Endpoint */,
+				CEBB4A6727708F4900065A36 /* Popular Collection */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		CEBB4A6727708F4900065A36 /* Popular Collection */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A6D27708FBD00065A36 /* Models */,
+				CEBB4A6B27708F8500065A36 /* RemotePopularMoviesLoader.swift */,
+				CEBB4A6E27708FCB00065A36 /* PopularMoviesMapper.swift */,
+				CEBB4A772770918800065A36 /* HTTPClient.swift */,
+			);
+			path = "Popular Collection";
+			sourceTree = "<group>";
+		};
+		CEBB4A6827708F5B00065A36 /* Endpoint */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A6927708F6300065A36 /* APIEndpoint.swift */,
+			);
+			path = Endpoint;
+			sourceTree = "<group>";
+		};
+		CEBB4A6D27708FBD00065A36 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A702770900C00065A36 /* RemotePopularMovies.swift */,
+				CEBB4A722770902600065A36 /* RemoteMovie.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CEBB4A74277090CE00065A36 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A75277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -127,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				CEBB4A54277056CE00065A36 /* Features */,
+				CEBB4A6627708F3B00065A36 /* Network */,
 			);
 			path = ShowTimeCore;
 			sourceTree = "<group>";
@@ -136,8 +188,6 @@
 			children = (
 				CEBB4A63277089A700065A36 /* Helpers */,
 				CEBB4A5F27705CD000065A36 /* Network */,
-				CEBB4A5E27705C9A00065A36 /* Features */,
-				CEDA257A2770528100452221 /* ShowTimeCoreTests.swift */,
 			);
 			path = ShowTimeCoreTests;
 			sourceTree = "<group>";
@@ -251,9 +301,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4A732770902600065A36 /* RemoteMovie.swift in Sources */,
 				CEBB4A5D27705BCF00065A36 /* PopularMoviesLoader.swift in Sources */,
+				CEBB4A6C27708F8500065A36 /* RemotePopularMoviesLoader.swift in Sources */,
 				CEBB4A59277057A600065A36 /* Movie.swift in Sources */,
+				CEBB4A6F27708FCB00065A36 /* PopularMoviesMapper.swift in Sources */,
+				CEBB4A782770918800065A36 /* HTTPClient.swift in Sources */,
 				CEBB4A5B2770584E00065A36 /* PopularCollection.swift in Sources */,
+				CEBB4A6A27708F6300065A36 /* APIEndpoint.swift in Sources */,
+				CEBB4A712770900C00065A36 /* RemotePopularMovies.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,7 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEBB4A65277089B600065A36 /* XCTestCase+TestHelpers.swift in Sources */,
-				CEDA257B2770528100452221 /* ShowTimeCoreTests.swift in Sources */,
+				CEBB4A76277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift in Sources */,
 				CEBB4A6227705D0000065A36 /* RemotePopularMoviesLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

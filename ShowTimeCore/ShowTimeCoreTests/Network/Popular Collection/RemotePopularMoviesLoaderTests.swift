@@ -9,99 +9,6 @@ import Foundation
 import XCTest
 import ShowTimeCore
 
-public enum APIEndpoint {
-    case popularMovies(page: Int, language: String)
-    
-    public func url(baseURL: URL) -> URL {
-        switch self {
-        case let .popularMovies(page, language):
-            let requestURL = baseURL
-              .appendingPathComponent("3")
-              .appendingPathComponent("movie")
-
-            var urlComponents = URLComponents(url: requestURL, resolvingAgainstBaseURL: false)
-            urlComponents?.queryItems = [
-              URLQueryItem(name: "language", value: language),
-              URLQueryItem(name: "page", value: "\(page)")
-            ]
-            return urlComponents?.url ?? requestURL
-        }
-    }
-}
-
-class RemotePopularMoviesLoader: PopularMoviesLoader {
-    private let client: HTTPClient
-    private let makeRequest: (PopularMoviesRequest) -> URLRequest
-    
-    public enum Error: Swift.Error, Equatable {
-        case connectivity
-        case invalidData
-    }
-    
-    private class PopularMoviesMapper {
-        private struct RemotePopularMovies: Decodable {
-            let page: Int
-            let total_pages: Int
-            let results: [RemoteMovie]
-            
-            var toModel: PopularCollection {
-                return PopularCollection(items: results.map { $0.toModel }, page: page, totalPages: total_pages)
-            }
-        }
-        
-        private struct RemoteMovie: Decodable {
-            let id: Int
-            let poster_path: String
-            let title: String
-            
-            var toModel: Movie {
-                Movie(id: id, title: title, imagePath: poster_path)
-            }
-        }
-        
-        private let validHTTPCode = 200
-        
-        static func map(data: Data, response: HTTPURLResponse) -> PopularMoviesLoader.Result {
-            guard response.statusCode == 200 else {
-                return .failure(Error.invalidData)
-            }
-            do {
-                let decoder = JSONDecoder()
-                let item = try decoder.decode(RemotePopularMovies.self, from: data)
-                return .success(item.toModel)
-            } catch {
-                return .failure(Error.invalidData)
-            }
-        }
-    }
-    
-    
-    
-    init(client: HTTPClient, makeRequest: @escaping (PopularMoviesRequest) -> URLRequest) {
-        self.client = client
-        self.makeRequest = makeRequest
-    }
-    
-    func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
-        let request = makeRequest(request)
-        client.request(request) { [weak self] result in
-            guard self != nil else { return }
-            switch result {
-            case let .success((data, response)):
-                completion(PopularMoviesMapper.map(data: data, response: response))
-            case .failure:
-                completion(.failure(Error.connectivity))
-            }
-        }
-    }
-}
-
-protocol HTTPClient {
-    typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
-    
-    func request(_ request: URLRequest, completion: @escaping (Result) -> Void)
-}
-
 class RemotePopularMoviesLoaderTests: XCTestCase {
     func test_init_doestNotRequestDataFromURL() {
         let (_, client) = makeSUT()
@@ -253,18 +160,6 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         return APIEndpoint.popularMovies(page: request.page, language: request.language).url(baseURL: makeAnyURL())
     }
     
-    private func makeHTTPURLResponse(url: URL, statusCode: Int = 200) -> HTTPURLResponse {
-        HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
-    }
-    
-    private func makeAnyURL() -> URL {
-        URL(string: "http://any-url.com")!
-    }
-    
-    private func anyNSError() -> NSError {
-        NSError(domain: "any error", code: 0)
-    }
-    
     private func makePopularCollection() -> (item: PopularCollection, json: [String: Any]) {
         let (item1, jsonItem1) = makeMovie(id: 1, title: "a title", imagePath: "image1")
         let (item2, jsonItem2) = makeMovie(id: 2, title: "another title", imagePath: "image2")
@@ -304,12 +199,7 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         return (item, json)
     }
     
-    private func makeJSONData(_ json: [String: Any]) -> Data {
-        return try! JSONSerialization.data(withJSONObject: json)
-    }
-    
     private class HTTPClientSpy: HTTPClient {
-        
         private var requests = [(request: URLRequest, completion: (HTTPClient.Result) -> Void)]()
         
         var requestedURLs: [URL?] {
@@ -331,23 +221,6 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         
         func complete(with data: Data = Data(), response: HTTPURLResponse, at index: Int = 0) {
             requests[index].completion(.success((data, response)))
-        }
-    }
-}
-
-private extension PopularMoviesRequest {
-    func url(baseURL: URL) -> URL {
-        return APIEndpoint.popularMovies(page: page, language: language).url(baseURL: baseURL)
-    }
-}
-
-private extension Result {
-    var error: Failure? {
-        switch self {
-        case let .failure(error):
-            return error
-        case .success:
-            return nil
         }
     }
 }
