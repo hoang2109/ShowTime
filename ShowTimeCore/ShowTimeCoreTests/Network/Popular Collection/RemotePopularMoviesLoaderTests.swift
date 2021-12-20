@@ -65,7 +65,8 @@ class RemotePopularMoviesLoader: PopularMoviesLoader {
     
     func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
         let request = makeRequest(request)
-        client.request(request) { result in
+        client.request(request) { [weak self] result in
+            guard self != nil else { return }
             switch result {
             case let .success((data, response)):
                 guard response.statusCode == 200 else {
@@ -177,6 +178,23 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         expect(sut, request: request, toCompleteWithResult: .success(collection)) {
             client.complete(with: makeJSONData(json), response: resposne)
         }
+    }
+    
+    func test_load_doesNotDeliverResultAfterSUTHasBeenDeallocated() {
+        let client = HTTPClientSpy()
+        let (url, request) = makePopularMoviesRequest()
+        var sut: RemotePopularMoviesLoader? = RemotePopularMoviesLoader(client: client) { request in
+            return URLRequest(url: url)
+        }
+        
+        var captureResults = [PopularMoviesLoader.Result]()
+        sut?.load(request, completion: { result in
+            captureResults.append(result)
+        })
+        sut = nil
+        client.complete(response: makeHTTPURLResponse(url: url))
+        
+        XCTAssertTrue(captureResults.isEmpty)
     }
     
     // MARK: - Helpers
