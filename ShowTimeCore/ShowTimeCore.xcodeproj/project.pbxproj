@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CEBB4A59277057A600065A36 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A58277057A600065A36 /* Movie.swift */; };
+		CEBB4A5B2770584E00065A36 /* PopularCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A5A2770584E00065A36 /* PopularCollection.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 		CEDA257B2770528100452221 /* ShowTimeCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDA257A2770528100452221 /* ShowTimeCoreTests.swift */; };
 /* End PBXBuildFile section */
@@ -22,6 +24,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CEBB4A58277057A600065A36 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		CEBB4A5A2770584E00065A36 /* PopularCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollection.swift; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA257A2770528100452221 /* ShowTimeCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTimeCoreTests.swift; sourceTree = "<group>"; };
@@ -46,6 +50,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CEBB4A54277056CE00065A36 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A55277056E900065A36 /* Popular Collection */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		CEBB4A55277056E900065A36 /* Popular Collection */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A58277057A600065A36 /* Movie.swift */,
+				CEBB4A5A2770584E00065A36 /* PopularCollection.swift */,
+			);
+			path = "Popular Collection";
+			sourceTree = "<group>";
+		};
 		CEDA25632770528000452221 = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +88,7 @@
 		CEDA256F2770528000452221 /* ShowTimeCore */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4A54277056CE00065A36 /* Features */,
 			);
 			path = ShowTimeCore;
 			sourceTree = "<group>";
@@ -140,6 +162,7 @@
 				TargetAttributes = {
 					CEDA256C2770528000452221 = {
 						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1320;
 					};
 					CEDA25742770528100452221 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -187,6 +210,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4A59277057A600065A36 /* Movie.swift in Sources */,
+				CEBB4A5B2770584E00065A36 /* PopularCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +358,7 @@
 		CEDA25802770528100452221 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -353,6 +379,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -360,6 +387,7 @@
 		CEDA25812770528100452221 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -387,6 +415,7 @@
 		CEDA25832770528100452221 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -401,6 +430,7 @@
 		CEDA25842770528100452221 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
