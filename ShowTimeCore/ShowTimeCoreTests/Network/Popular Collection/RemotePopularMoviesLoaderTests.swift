@@ -35,6 +35,7 @@ class RemotePopularMoviesLoader: PopularMoviesLoader {
     
     public enum Error: Swift.Error, Equatable {
         case connectivity
+        case invalidData
     }
     
     init(client: HTTPClient, makeRequest: @escaping (PopularMoviesRequest) -> URLRequest) {
@@ -44,14 +45,19 @@ class RemotePopularMoviesLoader: PopularMoviesLoader {
     
     func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
         let request = makeRequest(request)
-        client.request(request) { _ in
-            completion(.failure(Error.connectivity))
+        client.request(request) { result in
+            switch result {
+            case .success:
+                completion(.failure(Error.invalidData))
+            case .failure:
+                completion(.failure(Error.connectivity))
+            }
         }
     }
 }
 
 protocol HTTPClient {
-    typealias Result = Swift.Result<Data, Error>
+    typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
     
     func request(_ request: URLRequest, completion: @escaping (Result) -> Void)
 }
@@ -66,32 +72,45 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
     func test_load_requestsDataFromURL() {
         let (sut, client) = makeSUT()
         
-        let request = makePopularMoviesRequest()
+        let (url, request) = makePopularMoviesRequest()
         sut.load(request) { _ in }
         
-        XCTAssertEqual(client.requestedURLs, [request.url(baseURL: makeAnyURL())])
+        XCTAssertEqual(client.requestedURLs, [url])
     }
     
     func test_loadTwice_requestsDataFromURLTwice() {
         let (sut, client) = makeSUT()
         
-        let request = makePopularMoviesRequest()
+        let (url, request) = makePopularMoviesRequest()
         sut.load(request) { _ in }
         
-        XCTAssertEqual(client.requestedURLs, [request.url(baseURL: makeAnyURL())])
+        XCTAssertEqual(client.requestedURLs, [url])
         
         sut.load(request) { _ in }
         
-        XCTAssertEqual(client.requestedURLs, [request.url(baseURL: makeAnyURL()), request.url(baseURL: makeAnyURL())])
+        XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        let request = makePopularMoviesRequest()
+        let (_, request) = makePopularMoviesRequest()
         
         expect(sut, request: request, toCompleteWithResult: .failure(RemotePopularMoviesLoader.Error.connectivity)) {
             client.complete(with: anyNSError())
+        }
+    }
+    
+    func test_load_deliversErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        let (url, request) = makePopularMoviesRequest()
+        
+        [199, 201, 250, 299, 400, 500].enumerated().forEach { (index, statusCode) in
+            let non200HTTPResponse = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+            expect(sut, request: request, toCompleteWithResult: .failure(RemotePopularMoviesLoader.Error.invalidData)) {
+                client.complete(response: non200HTTPResponse, at: index)
+            }
         }
     }
     
@@ -130,12 +149,18 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    private func makePopularMoviesRequest(page: Int = 1, language: String = "en-US") -> PopularMoviesRequest {
-        PopularMoviesRequest(page: page, language: language)
+    private func makePopularMoviesRequest(page: Int = 1, language: String = "en-US") -> (url: URL, request: PopularMoviesRequest) {
+        let baseURL = makeAnyURL()
+        let request = PopularMoviesRequest(page: page, language: language)
+        return (request.url(baseURL: baseURL), request)
     }
     
     private func makePopularMoviesURL(request: PopularMoviesRequest) -> URL {
         return APIEndpoint.popularMovies(page: request.page, language: request.language).url(baseURL: makeAnyURL())
+    }
+    
+    private func makeHTTPURLResponse(url: URL, statusCode: Int = 200) -> HTTPURLResponse {
+        HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
     }
     
     private func makeAnyURL() -> URL {
@@ -165,6 +190,10 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         
         func complete(with error: NSError, at index: Int = 0) {
             requests[index].completion(.failure(error))
+        }
+        
+        func complete(with data: Data = Data(), response: HTTPURLResponse, at index: Int = 0) {
+            requests[index].completion(.success((data, response)))
         }
     }
 }
