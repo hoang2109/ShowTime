@@ -38,6 +38,26 @@ class RemotePopularMoviesLoader: PopularMoviesLoader {
         case invalidData
     }
     
+    private struct RemotePopularMovies: Decodable {
+        let page: Int
+        let total_pages: Int
+        let results: [RemoteMovie]
+        
+        var toModel: PopularCollection {
+            return PopularCollection(items: results.map { $0.toModel }, page: page, totalPages: total_pages)
+        }
+    }
+    
+    private struct RemoteMovie: Decodable {
+        let id: Int
+        let poster_path: String
+        let title: String
+        
+        var toModel: Movie {
+            Movie(id: id, title: title, imagePath: poster_path)
+        }
+    }
+    
     init(client: HTTPClient, makeRequest: @escaping (PopularMoviesRequest) -> URLRequest) {
         self.client = client
         self.makeRequest = makeRequest
@@ -47,8 +67,18 @@ class RemotePopularMoviesLoader: PopularMoviesLoader {
         let request = makeRequest(request)
         client.request(request) { result in
             switch result {
-            case .success:
-                completion(.failure(Error.invalidData))
+            case let .success((data, response)):
+                guard response.statusCode == 200 else {
+                    completion(.failure(Error.invalidData))
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    let item = try decoder.decode(RemotePopularMovies.self, from: data)
+                    completion(.success(item.toModel))
+                } catch {
+                    completion(.failure(Error.invalidData))
+                }
             case .failure:
                 completion(.failure(Error.connectivity))
             }
@@ -125,6 +155,18 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
         }
     }
     
+    func test_load_deliversPopularCollectionOn200HTTPResponseWithJSONEmptyItem() {
+        let (sut, client) = makeSUT()
+        
+        let (url, request) = makePopularMoviesRequest()
+        let (empty, json) = makeEmptyPopularCollection()
+        let resposne = makeHTTPURLResponse(url: url)
+        
+        expect(sut, request: request, toCompleteWithResult: .success(empty)) {
+            client.complete(with: makeJSONData(json), response: resposne)
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> (sut: RemotePopularMoviesLoader, client: HTTPClientSpy) {
@@ -180,6 +222,49 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
     
     private func anyNSError() -> NSError {
         NSError(domain: "any error", code: 0)
+    }
+    
+    private func makePopularCollection() -> (item: PopularCollection, json: [String: Any]) {
+        let (item1, jsonItem1) = makeMovie(id: 1, title: "a title", imagePath: "image1")
+        let (item2, jsonItem2) = makeMovie(id: 2, title: "another title", imagePath: "image2")
+        
+        let collection = PopularCollection(items: [item1, item2], page: 1, totalPages: 1)
+        
+        let json: [String: Any] = [
+            "page": 1,
+            "total_pages": 1,
+            "results": [jsonItem1, jsonItem2]
+        ]
+        
+        return (collection, json)
+    }
+    
+    private func makeEmptyPopularCollection() -> (item: PopularCollection, json: [String: Any]) {
+        let collection = PopularCollection(items: [], page: 1, totalPages: 1)
+        
+        let json: [String: Any] = [
+            "page": 1,
+            "total_pages": 1,
+            "results": []
+        ]
+        
+        return (collection, json)
+    }
+    
+    private func makeMovie(id: Int, title: String, imagePath: String) -> (item: Movie, json: [String: Any]) {
+        let item = Movie(id: id, title: title, imagePath: imagePath)
+        
+        let json: [String: Any] = [
+            "id": id,
+            "title": title,
+            "poster_path": imagePath
+        ]
+        
+        return (item, json)
+    }
+    
+    private func makeJSONData(_ json: [String: Any]) -> Data {
+        return try! JSONSerialization.data(withJSONObject: json)
     }
     
     private class HTTPClientSpy: HTTPClient {
