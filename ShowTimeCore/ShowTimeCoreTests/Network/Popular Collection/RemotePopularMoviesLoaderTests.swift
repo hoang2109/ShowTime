@@ -38,25 +38,44 @@ class RemotePopularMoviesLoader: PopularMoviesLoader {
         case invalidData
     }
     
-    private struct RemotePopularMovies: Decodable {
-        let page: Int
-        let total_pages: Int
-        let results: [RemoteMovie]
+    private class PopularMoviesMapper {
+        private struct RemotePopularMovies: Decodable {
+            let page: Int
+            let total_pages: Int
+            let results: [RemoteMovie]
+            
+            var toModel: PopularCollection {
+                return PopularCollection(items: results.map { $0.toModel }, page: page, totalPages: total_pages)
+            }
+        }
         
-        var toModel: PopularCollection {
-            return PopularCollection(items: results.map { $0.toModel }, page: page, totalPages: total_pages)
+        private struct RemoteMovie: Decodable {
+            let id: Int
+            let poster_path: String
+            let title: String
+            
+            var toModel: Movie {
+                Movie(id: id, title: title, imagePath: poster_path)
+            }
+        }
+        
+        private let validHTTPCode = 200
+        
+        static func map(data: Data, response: HTTPURLResponse) -> PopularMoviesLoader.Result {
+            guard response.statusCode == 200 else {
+                return .failure(Error.invalidData)
+            }
+            do {
+                let decoder = JSONDecoder()
+                let item = try decoder.decode(RemotePopularMovies.self, from: data)
+                return .success(item.toModel)
+            } catch {
+                return .failure(Error.invalidData)
+            }
         }
     }
     
-    private struct RemoteMovie: Decodable {
-        let id: Int
-        let poster_path: String
-        let title: String
-        
-        var toModel: Movie {
-            Movie(id: id, title: title, imagePath: poster_path)
-        }
-    }
+    
     
     init(client: HTTPClient, makeRequest: @escaping (PopularMoviesRequest) -> URLRequest) {
         self.client = client
@@ -69,17 +88,7 @@ class RemotePopularMoviesLoader: PopularMoviesLoader {
             guard self != nil else { return }
             switch result {
             case let .success((data, response)):
-                guard response.statusCode == 200 else {
-                    completion(.failure(Error.invalidData))
-                    return
-                }
-                do {
-                    let decoder = JSONDecoder()
-                    let item = try decoder.decode(RemotePopularMovies.self, from: data)
-                    completion(.success(item.toModel))
-                } catch {
-                    completion(.failure(Error.invalidData))
-                }
+                completion(PopularMoviesMapper.map(data: data, response: response))
             case .failure:
                 completion(.failure(Error.connectivity))
             }
