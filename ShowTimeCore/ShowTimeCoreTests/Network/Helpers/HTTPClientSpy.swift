@@ -43,8 +43,8 @@ class HTTPClientSpy: HTTPClient {
     func request(_ request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
         requests.append((request, completion))
         
-        return Task {
-            self.cancelRequests.append(request)
+        return Task { [weak self] in
+            self?.cancelRequests.append(request)
         }
     }
     

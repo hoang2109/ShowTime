@@ -17,14 +17,14 @@ public class URLSessionHTTPClient: HTTPClient {
     
     private struct UnexpectedValuesRepresentation: Error {}
     private struct Task: HTTPClientTask {
-        private let onCancel: () -> Void
+        let sessionTask: URLSessionTask
         
-        init(onCancel: @escaping () -> Void) {
-            self.onCancel = onCancel
+        init(sessionTask: URLSessionDataTask) {
+            self.sessionTask = sessionTask
         }
         
         func cancel() {
-            onCancel()
+            sessionTask.cancel()
         }
     }
     
@@ -40,8 +40,6 @@ public class URLSessionHTTPClient: HTTPClient {
         }
         task.resume()
         
-        return Task {
-            task.cancel()
-        }
+        return Task(sessionTask: task)
     }
 }
