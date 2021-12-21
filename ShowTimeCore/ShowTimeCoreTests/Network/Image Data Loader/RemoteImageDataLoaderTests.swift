@@ -37,7 +37,7 @@ class RemoteImageDataLoader: ImageDataLoader {
                     completion(.failure(Error.invalidData))
                     return
                 }
-                break
+                completion(.success(data))
             case .failure:
                 completion(.failure(Error.connectivity))
             }
@@ -99,6 +99,15 @@ class RemoteImageDataLoaderTests: XCTestCase {
         
         expect(sut, url: makeAnyURL(), toCompleteWithResult: .failure(RemoteImageDataLoader.Error.invalidData)) {
             client.complete(with: Data(), response: makeHTTPURLResponse(url: makeAnyURL(), statusCode: 200))
+        }
+    }
+    
+    func test_load_deliversSuccessOnSuccessResponseWithNonEmptyData() {
+        let (sut, client) = makeSUT()
+        let expected = Data("any data".utf8)
+        
+        expect(sut, url: makeAnyURL(), toCompleteWithResult: .success(expected)) {
+            client.complete(with: expected, response: makeHTTPURLResponse(url: makeAnyURL(), statusCode: 200))
         }
     }
     
