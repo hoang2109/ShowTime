@@ -165,6 +165,18 @@ class RemoteImageDataLoaderTests: XCTestCase {
         XCTAssertTrue(captureResults.isEmpty)
     }
     
+    func test_doesNotInvokeCompletionOnceInstanceHasBeenDeallocated() {
+        let client = HTTPClientSpy()
+        var sut: ImageDataLoader? = RemoteImageDataLoader(client: client)
+
+        var captureResults = [Any]()
+        _ = sut?.load(from: makeAnyURL(), completion: { captureResults.append($0) })
+        sut = nil
+          
+        client.complete(with: anyData(), response: makeHTTPURLResponse(url: makeAnyURL(), statusCode: 200))
+        XCTAssertTrue(captureResults.isEmpty)
+    }
+    
     // MARK: - Helpers
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteImageDataLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
