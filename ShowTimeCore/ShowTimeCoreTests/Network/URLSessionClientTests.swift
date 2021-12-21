@@ -73,6 +73,17 @@ class URLSessionClientTests: XCTestCase {
         XCTAssertEqual(receivedRequest?.httpMethod, "GET")
     }
     
+    func test_request_succeedsOnHTTPURLResponseWithData() {
+        let data = anyData()
+        let response = anyHTTPURLResponse()
+        
+        let receivedValues = resultValuesFor(data: data, response: response, error: nil)
+        
+        XCTAssertEqual(receivedValues?.data, data)
+        XCTAssertEqual(receivedValues?.response.url, response.url)
+        XCTAssertEqual(receivedValues?.response.statusCode, response.statusCode)
+    }
+    
     func test_request_failsOnAllInvalidRepresentationCases() {
         let anyData = anyData()
         let anyError = anyNSError()
