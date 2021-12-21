@@ -21,6 +21,8 @@
 		CEBB4A782770918800065A36 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A772770918800065A36 /* HTTPClient.swift */; };
 		CEBB4A7A2771BB3800065A36 /* URLSessionClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */; };
 		CEBB4A7D2771C22A00065A36 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A7C2771C22A00065A36 /* URLSessionHTTPClient.swift */; };
+		CEBB4A832771C3C600065A36 /* RemoteImageDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A822771C3C600065A36 /* RemoteImageDataLoaderTests.swift */; };
+		CEBB4A862771C4FF00065A36 /* HTTPClientSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A852771C4FF00065A36 /* HTTPClientSpy.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +51,8 @@
 		CEBB4A772770918800065A36 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionClientTests.swift; sourceTree = "<group>"; };
 		CEBB4A7C2771C22A00065A36 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		CEBB4A822771C3C600065A36 /* RemoteImageDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageDataLoaderTests.swift; sourceTree = "<group>"; };
+		CEBB4A852771C4FF00065A36 /* HTTPClientSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientSpy.swift; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -93,8 +97,10 @@
 		CEBB4A5F27705CD000065A36 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4A842771C4F800065A36 /* Helpers */,
 				CEBB4A7F2771C2BB00065A36 /* Shared */,
 				CEBB4A6027705CDA00065A36 /* Popular Collection */,
+				CEBB4A812771C34800065A36 /* Image Data Loader */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -176,6 +182,22 @@
 				CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		CEBB4A812771C34800065A36 /* Image Data Loader */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A822771C3C600065A36 /* RemoteImageDataLoaderTests.swift */,
+			);
+			path = "Image Data Loader";
+			sourceTree = "<group>";
+		};
+		CEBB4A842771C4F800065A36 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A852771C4FF00065A36 /* HTTPClientSpy.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		CEDA25632770528000452221 = {
@@ -341,9 +363,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEBB4A65277089B600065A36 /* XCTestCase+TestHelpers.swift in Sources */,
+				CEBB4A862771C4FF00065A36 /* HTTPClientSpy.swift in Sources */,
 				CEBB4A76277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift in Sources */,
 				CEBB4A6227705D0000065A36 /* RemotePopularMoviesLoaderTests.swift in Sources */,
 				CEBB4A7A2771BB3800065A36 /* URLSessionClientTests.swift in Sources */,
+				CEBB4A832771C3C600065A36 /* RemoteImageDataLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
