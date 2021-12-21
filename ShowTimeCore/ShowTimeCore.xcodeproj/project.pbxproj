@@ -20,6 +20,7 @@
 		CEBB4A76277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A75277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift */; };
 		CEBB4A782770918800065A36 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A772770918800065A36 /* HTTPClient.swift */; };
 		CEBB4A7A2771BB3800065A36 /* URLSessionClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */; };
+		CEBB4A7D2771C22A00065A36 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A7C2771C22A00065A36 /* URLSessionHTTPClient.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		CEBB4A75277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopularMoviesRequest+TestHelpers.swift"; sourceTree = "<group>"; };
 		CEBB4A772770918800065A36 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionClientTests.swift; sourceTree = "<group>"; };
+		CEBB4A7C2771C22A00065A36 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -91,8 +93,8 @@
 		CEBB4A5F27705CD000065A36 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4A7F2771C2BB00065A36 /* Shared */,
 				CEBB4A6027705CDA00065A36 /* Popular Collection */,
-				CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -117,6 +119,7 @@
 		CEBB4A6627708F3B00065A36 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4A7B2771C21C00065A36 /* Shared */,
 				CEBB4A6827708F5B00065A36 /* Endpoint */,
 				CEBB4A6727708F4900065A36 /* Popular Collection */,
 			);
@@ -129,7 +132,6 @@
 				CEBB4A6D27708FBD00065A36 /* Models */,
 				CEBB4A6B27708F8500065A36 /* RemotePopularMoviesLoader.swift */,
 				CEBB4A6E27708FCB00065A36 /* PopularMoviesMapper.swift */,
-				CEBB4A772770918800065A36 /* HTTPClient.swift */,
 			);
 			path = "Popular Collection";
 			sourceTree = "<group>";
@@ -157,6 +159,23 @@
 				CEBB4A75277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		CEBB4A7B2771C21C00065A36 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A772770918800065A36 /* HTTPClient.swift */,
+				CEBB4A7C2771C22A00065A36 /* URLSessionHTTPClient.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		CEBB4A7F2771C2BB00065A36 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		CEDA25632770528000452221 = {
@@ -305,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEBB4A732770902600065A36 /* RemoteMovie.swift in Sources */,
+				CEBB4A7D2771C22A00065A36 /* URLSessionHTTPClient.swift in Sources */,
 				CEBB4A5D27705BCF00065A36 /* PopularMoviesLoader.swift in Sources */,
 				CEBB4A6C27708F8500065A36 /* RemotePopularMoviesLoader.swift in Sources */,
 				CEBB4A59277057A600065A36 /* Movie.swift in Sources */,
