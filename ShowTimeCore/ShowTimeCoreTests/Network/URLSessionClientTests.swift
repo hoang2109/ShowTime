@@ -84,6 +84,18 @@ class URLSessionClientTests: XCTestCase {
         XCTAssertEqual(receivedValues?.response.statusCode, response.statusCode)
     }
     
+    func test_request_succeedsWithEmptyDataOnHTTPURLResponseWithNilData() {
+        let response = anyHTTPURLResponse()
+        URLProtocolStub.stub(data: nil, response: response, error: nil)
+        
+        let receivedValues = resultValuesFor(data: nil, response: response, error: nil)
+        
+        let emptyData = Data()
+        XCTAssertEqual(receivedValues?.data, emptyData)
+        XCTAssertEqual(receivedValues?.response.url, response.url)
+        XCTAssertEqual(receivedValues?.response.statusCode, response.statusCode)
+    }
+    
     func test_request_failsOnAllInvalidRepresentationCases() {
         let anyData = anyData()
         let anyError = anyNSError()
