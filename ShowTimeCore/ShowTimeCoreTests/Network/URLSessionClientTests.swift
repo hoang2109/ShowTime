@@ -60,6 +60,26 @@ class URLSessionClientTests: XCTestCase {
         XCTAssertEqual((received?.error as NSError?)?.domain, expected.domain)
     }
     
+    func test_request_performGETRequestWithURL() {
+        let url = makeAnyURL()
+        let exp = expectation(description: "Waiting for request")
+        var receivedRequest: URLRequest?
+        
+        URLProtocolStub.observeRequests { request in
+            receivedRequest = request
+        }
+        
+        let request = URLRequest(url: url)
+        let sut = URLSessionHTTPClient()
+        sut.request(request) { _ in
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(receivedRequest?.url, url)
+        XCTAssertEqual(receivedRequest?.httpMethod, "GET")
+    }
+    
     
     // MARK: - Helpers
     
