@@ -23,10 +23,19 @@ class RemoteImageDataLoader: ImageDataLoader {
         self.client = client
     }
     
+    public enum Error: Swift.Error, Equatable {
+        case connectivity
+    }
+    
     func load(from url: URL, completion: @escaping (ImageDataLoader.Result) -> Void) {
         let request = URLRequest(url: url)
         client.request(request) { result in
-            
+            switch result {
+            case .success:
+                break
+            case .failure:
+                completion(.failure(Error.connectivity))
+            }
         }
     }
 }
@@ -60,6 +69,15 @@ class RemoteImageDataLoaderTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
+    func test_load_deliversErrorOnClientError() {
+        let error = RemoteImageDataLoader.Error.connectivity
+        let (sut, client) = makeSUT()
+        
+        expect(sut, url: makeAnyURL(), toCompleteWithResult: .failure(error)) {
+            client.complete(with: anyNSError())
+        }
+    }
+    
     // MARK: - Helpers
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteImageDataLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
@@ -69,5 +87,28 @@ class RemoteImageDataLoaderTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         
         return (sut, client)
+    }
+    
+    private func expect(_ sut: RemoteImageDataLoader, url: URL, toCompleteWithResult expectedResult: RemoteImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for load completion")
+        sut.load(from: url) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedItem), .success(expectedItem)):
+                XCTAssertEqual(receivedItem, expectedItem, file: file, line: line)
+
+            case let (.failure(receivedError as RemoteImageDataLoader.Error), .failure(expectedError as RemoteImageDataLoader.Error)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+
+            default:
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
+            }
+
+            exp.fulfill()
+        }
+        
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
     }
 }
