@@ -25,13 +25,18 @@ class RemoteImageDataLoader: ImageDataLoader {
     
     public enum Error: Swift.Error, Equatable {
         case connectivity
+        case invalidData
     }
     
     func load(from url: URL, completion: @escaping (ImageDataLoader.Result) -> Void) {
         let request = URLRequest(url: url)
         client.request(request) { result in
             switch result {
-            case .success:
+            case let .success((_, response)):
+                guard response.statusCode == 200 else {
+                    completion(.failure(Error.invalidData))
+                    return
+                }
                 break
             case .failure:
                 completion(.failure(Error.connectivity))
@@ -75,6 +80,17 @@ class RemoteImageDataLoaderTests: XCTestCase {
         
         expect(sut, url: makeAnyURL(), toCompleteWithResult: .failure(error)) {
             client.complete(with: anyNSError())
+        }
+    }
+    
+    func test_load_deliversErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        [199, 201, 250, 299, 400, 500].enumerated().forEach { (index, statusCode) in
+            let non200HTTPResponse = HTTPURLResponse(url: makeAnyURL(), statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+            expect(sut, url: makeAnyURL(), toCompleteWithResult: .failure(RemoteImageDataLoader.Error.invalidData)) {
+                client.complete(response: non200HTTPResponse, at: index)
+            }
         }
     }
     
