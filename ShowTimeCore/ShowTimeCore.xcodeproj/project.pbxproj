@@ -19,6 +19,7 @@
 		CEBB4A732770902600065A36 /* RemoteMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A722770902600065A36 /* RemoteMovie.swift */; };
 		CEBB4A76277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A75277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift */; };
 		CEBB4A782770918800065A36 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A772770918800065A36 /* HTTPClient.swift */; };
+		CEBB4A7A2771BB3800065A36 /* URLSessionClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		CEBB4A722770902600065A36 /* RemoteMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovie.swift; sourceTree = "<group>"; };
 		CEBB4A75277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopularMoviesRequest+TestHelpers.swift"; sourceTree = "<group>"; };
 		CEBB4A772770918800065A36 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionClientTests.swift; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				CEBB4A6027705CDA00065A36 /* Popular Collection */,
+				CEBB4A792771BB3800065A36 /* URLSessionClientTests.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				CEBB4A65277089B600065A36 /* XCTestCase+TestHelpers.swift in Sources */,
 				CEBB4A76277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift in Sources */,
 				CEBB4A6227705D0000065A36 /* RemotePopularMoviesLoaderTests.swift in Sources */,
+				CEBB4A7A2771BB3800065A36 /* URLSessionClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
