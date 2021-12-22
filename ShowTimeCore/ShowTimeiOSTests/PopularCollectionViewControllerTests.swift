@@ -103,6 +103,24 @@ class PopularCollectionViewControllerTests: XCTestCase {
         assertThat(sut, isRendering: collection)
     }
     
+    func test_loadPopularMoviesCompletion_doesNotAlterCurrentRenderStateOnError() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
+        
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        loader.completePopularMoviesLoading(with: collection)
+        
+        assertThat(sut, isRendering: collection)
+        
+        sut.simulateUserInitiatedReload()
+        loader.completePopularMoviesLoading(with: anyNSError(), at: 1)
+        
+        assertThat(sut, isRendering: collection)
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
@@ -134,6 +152,10 @@ class PopularCollectionViewControllerTests: XCTestCase {
     
     private func makeMovieItem(id: Int, title: String, imagePath: String) -> Movie {
         Movie(id: id, title: title, imagePath: imagePath)
+    }
+    
+    private func anyNSError() -> NSError {
+        NSError(domain: "any error", code: 1)
     }
     
     private class LoaderSpy: PopularMoviesLoader {
