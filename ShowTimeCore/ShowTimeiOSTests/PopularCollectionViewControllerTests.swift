@@ -9,20 +9,33 @@ import Foundation
 import XCTest
 import ShowTimeCore
 
-class PopularCollectionViewController {
-    private let popularMoviesLoader: PopularMoviesLoader
+class PopularCollectionViewController: UIViewController {
+    private var popularMoviesLoader: PopularMoviesLoader?
     
-    init(popularMoviesLoader: PopularMoviesLoader) {
+    convenience init(popularMoviesLoader: PopularMoviesLoader) {
+        self.init()
         self.popularMoviesLoader = popularMoviesLoader
+    }
+    
+    override func viewDidLoad() {
+        load()
+    }
+    
+    func load() {
+        let request = PopularMoviesRequest(page: 1)
+        popularMoviesLoader?.load(request) { _ in }
     }
 }
 
 class PopularCollectionViewControllerTests: XCTestCase {
     
     func test_load_requestsPopularMoviesFromLoader() {
-        let (_, loader) = makeSUT()
+        let (sut, loader) = makeSUT()
         
         XCTAssertEqual(loader.popularMoviesLoaderCount, 0, "Expected no loading requests before view is loaded")
+        
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(loader.popularMoviesLoaderCount, 1, "Expected a loading request once view is loaded")
     }
     
     // MARK: - Helper
