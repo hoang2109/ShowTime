@@ -17,6 +17,7 @@ class PopularCollectionViewController: UICollectionViewController {
     private var popularMoviesLoader: PopularMoviesLoader?
     private var imageLoader: ImageDataLoader?
     private var makePosterImageURL: ((Movie) -> URL)?
+    private var tasks = [IndexPath: ImageDataLoaderTask]()
     
     private var collectionModel = [Movie]() {
         didSet {
@@ -57,10 +58,14 @@ class PopularCollectionViewController: UICollectionViewController {
         let item = collectionModel[indexPath.row]
         let cell = PopularMovieCell()
         if let url = makePosterImageURL?(item) {
-            imageLoader?.load(from: url) { _ in }
+            tasks[indexPath] = imageLoader?.load(from: url) { _ in }
         }
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        tasks[indexPath]?.cancel()
     }
 }
 
@@ -152,6 +157,26 @@ class PopularCollectionViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [url1, url2], "Expected second image URL request once second view also becomes visible")
     }
     
+    func test_movieImageView_cancelsImageLoadingWhenNotVisibleAnymore() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
+        let url1 = anyURL().appendingPathComponent(movie1.imagePath)
+        let url2 = anyURL().appendingPathComponent(movie2.imagePath)
+        
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completePopularMoviesLoading(with: collection)
+        XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL requests until image is not visible")
+
+        sut.simulateMovieViewNotVisible(at: 0)
+        XCTAssertEqual(loader.cancelledImageURLs, [url1], "Expected one cancelled image URL request once first image is not visible anymore")
+
+        sut.simulateMovieViewNotVisible(at: 1)
+        XCTAssertEqual(loader.cancelledImageURLs, [url1, url2], "Expected two cancelled image URL requests once second image is also not visible anymore")
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
@@ -223,16 +248,26 @@ class PopularCollectionViewControllerTests: XCTestCase {
             imageDataRequests.map { $0.url }
         }
         
+        private(set) var cancelledImageURLs = [URL]()
+        
         private struct Task: ImageDataLoaderTask {
+            var onCancel: (() -> Void)?
+            
+            init(onCancel: (() -> Void)? = nil) {
+                self.onCancel = onCancel
+            }
+            
             func cancel() {
-                
+                onCancel?()
             }
         }
         
         func load(from url: URL, completion: @escaping (ImageDataLoader.Result) -> Void) -> ImageDataLoaderTask {
             imageDataRequests.append((url, completion))
             
-            return Task()
+            return Task() { [weak self] in
+                self?.cancelledImageURLs.append(url)
+            }
         }
     }
 }
@@ -274,6 +309,13 @@ private extension PopularCollectionViewController {
     
     func simulateMovieViewVisible(at index: Int) {
         _ = movieView(at: index)
+    }
+    
+    func simulateMovieViewNotVisible(at index: Int) {
+        let view = movieView(at: index)
+        let dl = collectionView.delegate
+        let indexPath = IndexPath(row: index, section: 0)
+        dl?.collectionView?(collectionView, didEndDisplaying: view!, forItemAt: indexPath)
     }
 }
 
