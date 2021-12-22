@@ -24,8 +24,11 @@ class PopularCollectionViewController: UICollectionViewController {
     }
     
     @objc func load() {
+        collectionView.refreshControl?.beginRefreshing()
         let request = PopularMoviesRequest(page: 1)
-        popularMoviesLoader?.load(request) { _ in }
+        popularMoviesLoader?.load(request) { [weak self] _ in
+            self?.collectionView.refreshControl?.endRefreshing()
+        }
     }
 }
 
@@ -43,6 +46,23 @@ class PopularCollectionViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.popularMoviesLoaderCount, 2, "Expected a loading request once view is loaded")
     }
     
+    func test_loadingIndicator_isVisibleWhileLoadingMovies() {
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        
+        XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once view is loaded")
+        
+        loader.completePopularMoviesLoading(at: 0)
+        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once loading completes successfully")
+        
+        sut.simulateUserInitiatedReload()
+        XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once user initiates a reload")
+        
+        loader.completePopularMoviesLoading(at: 1)
+        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once user initiated loading completes with error")
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
@@ -54,10 +74,18 @@ class PopularCollectionViewControllerTests: XCTestCase {
     
     private class LoaderSpy: PopularMoviesLoader {
         
-        private(set) var popularMoviesLoaderCount = 0
+        private var popularMoviesLoaderCompletions = [(PopularMoviesLoader.Result) -> Void]()
+        
+        var popularMoviesLoaderCount: Int {
+            return popularMoviesLoaderCompletions.count
+        }
         
         func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
-            popularMoviesLoaderCount += 1
+            popularMoviesLoaderCompletions.append(completion)
+        }
+        
+        func completePopularMoviesLoading(at index: Int = 0) {
+            popularMoviesLoaderCompletions[index](.success(PopularCollection(items: [], page: 1, totalPages: 1)))
         }
     }
 }
@@ -79,6 +107,10 @@ private extension UIRefreshControl {
 }
 
 private extension PopularCollectionViewController {
+    var isShowingLoadingIndicator: Bool {
+        return collectionView.refreshControl!.isRefreshing
+    }
+    
     func simulateUserInitiatedReload() {
         self.collectionView.refreshControl?.simulateRefreshing()
     }
