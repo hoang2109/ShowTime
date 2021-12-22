@@ -15,6 +15,8 @@ class PopularMovieCell: UICollectionViewCell {
 
 class PopularCollectionViewController: UICollectionViewController {
     private var popularMoviesLoader: PopularMoviesLoader?
+    private var imageLoader: ImageDataLoader?
+    private var makePosterImageURL: ((Movie) -> URL)?
     
     private var collectionModel = [Movie]() {
         didSet {
@@ -22,9 +24,11 @@ class PopularCollectionViewController: UICollectionViewController {
         }
     }
     
-    convenience init(popularMoviesLoader: PopularMoviesLoader) {
+    convenience init(popularMoviesLoader: PopularMoviesLoader, imageLoader: ImageDataLoader, makePosterImageURL: @escaping (Movie) -> URL) {
         self.init(collectionViewLayout: UICollectionViewFlowLayout())
         self.popularMoviesLoader = popularMoviesLoader
+        self.imageLoader = imageLoader
+        self.makePosterImageURL = makePosterImageURL
     }
     
     override func viewDidLoad() {
@@ -50,7 +54,13 @@ class PopularCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        PopularMovieCell()
+        let item = collectionModel[indexPath.row]
+        let cell = PopularMovieCell()
+        if let url = makePosterImageURL?(item) {
+            imageLoader?.load(from: url) { _ in }
+        }
+        
+        return cell
     }
 }
 
@@ -121,11 +131,34 @@ class PopularCollectionViewControllerTests: XCTestCase {
         assertThat(sut, isRendering: collection)
     }
     
+    func test_movieImageView_loadsImageURLWhenVisible() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
+        let url1 = anyURL().appendingPathComponent(movie1.imagePath)
+        let url2 = anyURL().appendingPathComponent(movie2.imagePath)
+        
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        loader.completePopularMoviesLoading(with: collection)
+        
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until views become visible")
+
+        sut.simulateMovieViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [url1], "Expected first image URL request once first view becomes visible")
+
+        sut.simulateMovieViewVisible(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [url1, url2], "Expected second image URL request once second view also becomes visible")
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let viewController = PopularCollectionViewController(popularMoviesLoader: loader)
+        let viewController = PopularCollectionViewController(popularMoviesLoader: loader, imageLoader: loader) { [unowned self] movie in
+            self.anyURL().appendingPathComponent(movie.imagePath)
+        }
         
         return (viewController, loader)
     }
@@ -154,12 +187,17 @@ class PopularCollectionViewControllerTests: XCTestCase {
         Movie(id: id, title: title, imagePath: imagePath)
     }
     
+    private func anyURL() -> URL {
+        URL(string: "https://any-url.com")!
+    }
+    
     private func anyNSError() -> NSError {
         NSError(domain: "any error", code: 1)
     }
     
-    private class LoaderSpy: PopularMoviesLoader {
+    private class LoaderSpy: PopularMoviesLoader, ImageDataLoader {
         
+        // MARK: - PopularMoviesLoader
         private var popularMoviesLoaderCompletions = [(PopularMoviesLoader.Result) -> Void]()
         
         var popularMoviesLoaderCount: Int {
@@ -176,6 +214,25 @@ class PopularCollectionViewControllerTests: XCTestCase {
         
         func completePopularMoviesLoading(with error: NSError, at index: Int = 0) {
             popularMoviesLoaderCompletions[index](.failure(error))
+        }
+        
+        // MARK: - ImageDataLoader
+        
+        private var imageDataRequests = [(url: URL, completion: (ImageDataLoader.Result) -> Void)]()
+        var loadedImageURLs: [URL] {
+            imageDataRequests.map { $0.url }
+        }
+        
+        private struct Task: ImageDataLoaderTask {
+            func cancel() {
+                
+            }
+        }
+        
+        func load(from url: URL, completion: @escaping (ImageDataLoader.Result) -> Void) -> ImageDataLoaderTask {
+            imageDataRequests.append((url, completion))
+            
+            return Task()
         }
     }
 }
@@ -213,6 +270,10 @@ private extension PopularCollectionViewController {
         let ds = collectionView.dataSource
         let indexPath = IndexPath(row: index, section: 0)
         return ds?.collectionView(collectionView, cellForItemAt: indexPath)
+    }
+    
+    func simulateMovieViewVisible(at index: Int) {
+        _ = movieView(at: index)
     }
 }
 
