@@ -9,19 +9,21 @@ import Foundation
 import XCTest
 import ShowTimeCore
 
-class PopularCollectionViewController: UIViewController {
+class PopularCollectionViewController: UICollectionViewController {
     private var popularMoviesLoader: PopularMoviesLoader?
     
     convenience init(popularMoviesLoader: PopularMoviesLoader) {
-        self.init()
+        self.init(collectionViewLayout: UICollectionViewFlowLayout())
         self.popularMoviesLoader = popularMoviesLoader
     }
     
     override func viewDidLoad() {
+        self.collectionView.refreshControl = UIRefreshControl()
+        self.collectionView.refreshControl?.addTarget(self, action: #selector(load), for: UIControl.Event.valueChanged)
         load()
     }
     
-    func load() {
+    @objc func load() {
         let request = PopularMoviesRequest(page: 1)
         popularMoviesLoader?.load(request) { _ in }
     }
@@ -36,6 +38,9 @@ class PopularCollectionViewControllerTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         XCTAssertEqual(loader.popularMoviesLoaderCount, 1, "Expected a loading request once view is loaded")
+        
+        sut.simulateUserInitiatedReload()
+        XCTAssertEqual(loader.popularMoviesLoaderCount, 2, "Expected a loading request once view is loaded")
     }
     
     // MARK: - Helper
@@ -54,5 +59,27 @@ class PopularCollectionViewControllerTests: XCTestCase {
         func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
             popularMoviesLoaderCount += 1
         }
+    }
+}
+
+extension UIControl {
+    func simulate(event: UIControl.Event) {
+        allTargets.forEach { target in
+            actions(forTarget: target, forControlEvent: event)?.forEach {
+                (target as NSObject).perform(Selector($0))
+            }
+        }
+    }
+}
+
+private extension UIRefreshControl {
+    func simulateRefreshing() {
+        simulate(event: .valueChanged)
+    }
+}
+
+private extension PopularCollectionViewController {
+    func simulateUserInitiatedReload() {
+        self.collectionView.refreshControl?.simulateRefreshing()
     }
 }
