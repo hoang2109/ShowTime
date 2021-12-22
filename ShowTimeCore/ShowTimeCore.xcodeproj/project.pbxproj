@@ -27,6 +27,9 @@
 		CEBB4A8C2771D25B00065A36 /* RemoteImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A8B2771D25B00065A36 /* RemoteImageDataLoader.swift */; };
 		CEBB4A9A27730B1100065A36 /* ShowTimeiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBB4A9227730B1000065A36 /* ShowTimeiOS.framework */; };
 		CEBB4A9F27730B1100065A36 /* ShowTimeiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A9E27730B1100065A36 /* ShowTimeiOSTests.swift */; };
+		CEBB4AA927730D8200065A36 /* PopularCollectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AA827730D8200065A36 /* PopularCollectionViewControllerTests.swift */; };
+		CEBB4AAB27730E2100065A36 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
+		CEBB4AAC27730E2100065A36 /* ShowTimeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +41,13 @@
 			remoteGlobalIDString = CEBB4A9127730B1000065A36;
 			remoteInfo = ShowTimeiOS;
 		};
+		CEBB4AAD27730E2100065A36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEDA25642770528000452221 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEDA256C2770528000452221;
+			remoteInfo = ShowTimeCore;
+		};
 		CEDA25772770528100452221 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEDA25642770528000452221 /* Project object */;
@@ -46,6 +56,20 @@
 			remoteInfo = ShowTimeCore;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CEBB4AAF27730E2100065A36 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CEBB4AAC27730E2100065A36 /* ShowTimeCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CEBB4A58277057A600065A36 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
@@ -69,6 +93,7 @@
 		CEBB4A9227730B1000065A36 /* ShowTimeiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBB4A9927730B1100065A36 /* ShowTimeiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBB4A9E27730B1100065A36 /* ShowTimeiOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTimeiOSTests.swift; sourceTree = "<group>"; };
+		CEBB4AA827730D8200065A36 /* PopularCollectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewControllerTests.swift; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -78,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4AAB27730E2100065A36 /* ShowTimeCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,8 +286,16 @@
 			isa = PBXGroup;
 			children = (
 				CEBB4A9E27730B1100065A36 /* ShowTimeiOSTests.swift */,
+				CEBB4AA827730D8200065A36 /* PopularCollectionViewControllerTests.swift */,
 			);
 			path = ShowTimeiOSTests;
+			sourceTree = "<group>";
+		};
+		CEBB4AAA27730E2100065A36 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CEDA25632770528000452221 = {
@@ -272,6 +306,7 @@
 				CEBB4A9327730B1000065A36 /* ShowTimeiOS */,
 				CEBB4A9D27730B1100065A36 /* ShowTimeiOSTests */,
 				CEDA256E2770528000452221 /* Products */,
+				CEBB4AAA27730E2100065A36 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -332,10 +367,12 @@
 				CEBB4A8E27730B1000065A36 /* Sources */,
 				CEBB4A8F27730B1000065A36 /* Frameworks */,
 				CEBB4A9027730B1000065A36 /* Resources */,
+				CEBB4AAF27730E2100065A36 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CEBB4AAE27730E2100065A36 /* PBXTargetDependency */,
 			);
 			name = ShowTimeiOS;
 			productName = ShowTimeiOS;
@@ -485,6 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4AA927730D8200065A36 /* PopularCollectionViewControllerTests.swift in Sources */,
 				CEBB4A9F27730B1100065A36 /* ShowTimeiOSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -529,6 +567,11 @@
 			target = CEBB4A9127730B1000065A36 /* ShowTimeiOS */;
 			targetProxy = CEBB4A9B27730B1100065A36 /* PBXContainerItemProxy */;
 		};
+		CEBB4AAE27730E2100065A36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEDA256C2770528000452221 /* ShowTimeCore */;
+			targetProxy = CEBB4AAD27730E2100065A36 /* PBXContainerItemProxy */;
+		};
 		CEDA25782770528100452221 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CEDA256C2770528000452221 /* ShowTimeCore */;
@@ -560,9 +603,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -589,9 +633,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
