@@ -12,6 +12,7 @@ import ShowTimeCore
 class PopularMovieCell: UICollectionViewCell {
     public var imageContainer = UIView()
     public var movieImageView = UIImageView()
+    public var retryButton = UIButton()
 }
 
 class PopularCollectionViewController: UICollectionViewController {
@@ -59,10 +60,13 @@ class PopularCollectionViewController: UICollectionViewController {
         let item = collectionModel[indexPath.row]
         let cell = PopularMovieCell()
         if let url = makePosterImageURL?(item) {
+            cell.retryButton.isHidden = true
             cell.imageContainer.isShimmering = true
             tasks[indexPath] = imageLoader?.load(from: url) { [weak cell] result in
                 if let data = try? result.get(), let image = UIImage(data: data) {
                     cell?.movieImageView.image = image
+                } else {
+                    cell?.retryButton.isHidden = false
                 }
                 
                 cell?.imageContainer.isShimmering = false
@@ -235,6 +239,26 @@ class PopularCollectionViewControllerTests: XCTestCase {
         XCTAssertEqual(view1?.renderedImage, imageData1, "Expected image for second view once second image loading completes successfully")
     }
     
+    func test_movieImageViewRetryButton_isVisibleOnInvalidImageData() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
+        
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completePopularMoviesLoading(with: collection)
+
+        let view = sut.simulateMovieViewVisible(at: 0)
+        XCTAssertEqual(view?.isShowingRetryAction, false, "Expected no retry action while loading image")
+
+        let invalidImageData = Data("invalid image data".utf8)
+        loader.completeImageLoading(with: invalidImageData, at: 0)
+        XCTAssertEqual(view?.isShowingRetryAction, true, "Expected retry action once image loading completes with invalid image data")
+    }
+    
+    
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
@@ -394,6 +418,10 @@ private extension PopularMovieCell {
     
     var renderedImage: Data? {
         movieImageView.image?.pngData()
+    }
+    
+    var isShowingRetryAction: Bool {
+        !retryButton.isHidden
     }
 }
 
