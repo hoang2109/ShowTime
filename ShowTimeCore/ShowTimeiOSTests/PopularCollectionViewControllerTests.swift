@@ -10,7 +10,8 @@ import XCTest
 import ShowTimeCore
 
 class PopularMovieCell: UICollectionViewCell {
-    
+    public var imageContainer = UIView()
+    public var movieImageView = UIImageView()
 }
 
 class PopularCollectionViewController: UICollectionViewController {
@@ -58,7 +59,10 @@ class PopularCollectionViewController: UICollectionViewController {
         let item = collectionModel[indexPath.row]
         let cell = PopularMovieCell()
         if let url = makePosterImageURL?(item) {
-            tasks[indexPath] = imageLoader?.load(from: url) { _ in }
+            cell.imageContainer.isShimmering = true
+            tasks[indexPath] = imageLoader?.load(from: url) { [weak cell] _ in
+                cell?.imageContainer.isShimmering = false
+            }
         }
         
         return cell
@@ -177,6 +181,30 @@ class PopularCollectionViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.cancelledImageURLs, [url1, url2], "Expected two cancelled image URL requests once second image is also not visible anymore")
     }
     
+    func test_movieImageViewLoadingIndicator_isVisibleWhileLoadingImage() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
+        
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completePopularMoviesLoading(with: collection)
+
+        let view0 = sut.simulateMovieViewVisible(at: 0)
+        let view1 = sut.simulateMovieViewVisible(at: 1)
+        XCTAssertEqual(view0?.isShowingImageLoadingIndicator, true, "Expected loading indicator for first view while loading first image")
+        XCTAssertEqual(view1?.isShowingImageLoadingIndicator, true, "Expected loading indicator for second view while loading second image")
+
+        loader.completeImageLoading(at: 0)
+        XCTAssertEqual(view0?.isShowingImageLoadingIndicator, false, "Expected no loading indicator for first view once first image loading completes successfully")
+        XCTAssertEqual(view1?.isShowingImageLoadingIndicator, true, "Expected no loading indicator state change for second view once first image loading completes successfully")
+
+        loader.completeImageLoadingWithError(at: 1)
+        XCTAssertEqual(view0?.isShowingImageLoadingIndicator, false, "Expected no loading indicator state change for first view once second image loading completes with error")
+        XCTAssertEqual(view1?.isShowingImageLoadingIndicator, false, "Expected no loading indicator for second view once second image loading completes with error")
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
@@ -269,6 +297,15 @@ class PopularCollectionViewControllerTests: XCTestCase {
                 self?.cancelledImageURLs.append(url)
             }
         }
+        
+        func completeImageLoading(with imageData: Data = Data(), at index: Int = 0) {
+            imageDataRequests[index].completion(.success(imageData))
+        }
+
+        func completeImageLoadingWithError(at index: Int = 0) {
+            let error = NSError(domain: "an error", code: 0)
+            imageDataRequests[index].completion(.failure(error))
+        }
     }
 }
 
@@ -307,8 +344,9 @@ private extension PopularCollectionViewController {
         return ds?.collectionView(collectionView, cellForItemAt: indexPath)
     }
     
-    func simulateMovieViewVisible(at index: Int) {
-        _ = movieView(at: index)
+    @discardableResult
+    func simulateMovieViewVisible(at index: Int) -> PopularMovieCell? {
+        movieView(at: index) as? PopularMovieCell
     }
     
     func simulateMovieViewNotVisible(at index: Int) {
@@ -319,8 +357,62 @@ private extension PopularCollectionViewController {
     }
 }
 
+private extension PopularMovieCell {
+    var isShowingImageLoadingIndicator: Bool {
+        imageContainer.isShimmering
+    }
+}
+
 private extension PopularCollection {
     var itemsCount: Int {
         items.count
+    }
+}
+
+import UIKit
+
+extension UIView {
+    public var isShimmering: Bool {
+        set {
+            if newValue {
+                startShimmering()
+            } else {
+                stopShimmering()
+            }
+        }
+
+        get {
+            return layer.mask?.animation(forKey: shimmerAnimationKey) != nil
+        }
+    }
+
+    private var shimmerAnimationKey: String {
+        return "shimmer"
+    }
+
+    private func startShimmering() {
+        let white = UIColor.white.cgColor
+        let alpha = UIColor.white.withAlphaComponent(0.75).cgColor
+        let width = bounds.width
+        let height = bounds.height
+
+        let gradient = CAGradientLayer()
+        gradient.colors = [alpha, white, alpha]
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.4)
+        gradient.endPoint = CGPoint(x: 1.0, y: 0.6)
+        gradient.locations = [0.4, 0.5, 0.6]
+        gradient.frame = CGRect(x: -width, y: 0, width: width*3, height: height)
+        layer.mask = gradient
+
+        let animation = CABasicAnimation(keyPath: #keyPath(CAGradientLayer.locations))
+        animation.fromValue = [0.0, 0.1, 0.2]
+        animation.toValue = [0.8, 0.9, 1.0]
+        animation.duration = 1.25
+        animation.repeatCount = .infinity
+        gradient.add(animation, forKey: shimmerAnimationKey)
+    }
+
+    private func stopShimmering() {
+        layer.mask = nil
     }
 }
