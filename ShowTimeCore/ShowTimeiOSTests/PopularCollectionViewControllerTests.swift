@@ -60,7 +60,11 @@ class PopularCollectionViewController: UICollectionViewController {
         let cell = PopularMovieCell()
         if let url = makePosterImageURL?(item) {
             cell.imageContainer.isShimmering = true
-            tasks[indexPath] = imageLoader?.load(from: url) { [weak cell] _ in
+            tasks[indexPath] = imageLoader?.load(from: url) { [weak cell] result in
+                if let data = try? result.get(), let image = UIImage(data: data) {
+                    cell?.movieImageView.image = image
+                }
+                
                 cell?.imageContainer.isShimmering = false
             }
         }
@@ -203,6 +207,32 @@ class PopularCollectionViewControllerTests: XCTestCase {
         loader.completeImageLoadingWithError(at: 1)
         XCTAssertEqual(view0?.isShowingImageLoadingIndicator, false, "Expected no loading indicator state change for first view once second image loading completes with error")
         XCTAssertEqual(view1?.isShowingImageLoadingIndicator, false, "Expected no loading indicator for second view once second image loading completes with error")
+    }
+    
+    func test_movieImageView_rendersImageLoadedFromURL() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
+        
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completePopularMoviesLoading(with: collection)
+
+        let view0 = sut.simulateMovieViewVisible(at: 0)
+        let view1 = sut.simulateMovieViewVisible(at: 1)
+        XCTAssertEqual(view0?.renderedImage, .none, "Expected no image for first view while loading first image")
+        XCTAssertEqual(view1?.renderedImage, .none, "Expected no image for second view while loading second image")
+
+        let imageData0 = UIImage.make(withColor: .red).pngData()!
+        loader.completeImageLoading(with: imageData0, at: 0)
+        XCTAssertEqual(view0?.renderedImage, imageData0, "Expected image for first view once first image loading completes successfully")
+        XCTAssertEqual(view1?.renderedImage, .none, "Expected no image state change for second view once first image loading completes successfully")
+
+        let imageData1 = UIImage.make(withColor: .blue).pngData()!
+        loader.completeImageLoading(with: imageData1, at: 1)
+        XCTAssertEqual(view0?.renderedImage, imageData0, "Expected no image state change for first view once second image loading completes successfully")
+        XCTAssertEqual(view1?.renderedImage, imageData1, "Expected image for second view once second image loading completes successfully")
     }
     
     // MARK: - Helper
@@ -361,6 +391,10 @@ private extension PopularMovieCell {
     var isShowingImageLoadingIndicator: Bool {
         imageContainer.isShimmering
     }
+    
+    var renderedImage: Data? {
+        movieImageView.image?.pngData()
+    }
 }
 
 private extension PopularCollection {
@@ -368,8 +402,6 @@ private extension PopularCollection {
         items.count
     }
 }
-
-import UIKit
 
 extension UIView {
     public var isShimmering: Bool {
@@ -414,5 +446,18 @@ extension UIView {
 
     private func stopShimmering() {
         layer.mask = nil
+    }
+}
+
+extension UIImage {
+    static func make(withColor color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()!
+        context.setFillColor(color.cgColor)
+        context.fill(rect)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img!
     }
 }
