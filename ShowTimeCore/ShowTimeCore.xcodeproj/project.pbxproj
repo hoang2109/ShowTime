@@ -26,10 +26,18 @@
 		CEBB4A892771D22C00065A36 /* ImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A882771D22C00065A36 /* ImageDataLoader.swift */; };
 		CEBB4A8C2771D25B00065A36 /* RemoteImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A8B2771D25B00065A36 /* RemoteImageDataLoader.swift */; };
 		CEBB4A9A27730B1100065A36 /* ShowTimeiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBB4A9227730B1000065A36 /* ShowTimeiOS.framework */; };
-		CEBB4A9F27730B1100065A36 /* ShowTimeiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A9E27730B1100065A36 /* ShowTimeiOSTests.swift */; };
 		CEBB4AA927730D8200065A36 /* PopularCollectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AA827730D8200065A36 /* PopularCollectionViewControllerTests.swift */; };
 		CEBB4AAB27730E2100065A36 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 		CEBB4AAC27730E2100065A36 /* ShowTimeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEBB4AB32775C5B700065A36 /* PopularMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AB22775C5B700065A36 /* PopularMovieCell.swift */; };
+		CEBB4AB62775C5EC00065A36 /* PopularCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AB52775C5EC00065A36 /* PopularCollectionViewController.swift */; };
+		CEBB4AB92775C66900065A36 /* UIView+Shimmering.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AB82775C66900065A36 /* UIView+Shimmering.swift */; };
+		CEBB4AC12775C72E00065A36 /* PopularCollectionViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AC02775C72E00065A36 /* PopularCollectionViewController+TestHelpers.swift */; };
+		CEBB4AC32775C7C700065A36 /* PopularMovieCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AC22775C7C700065A36 /* PopularMovieCell+TestHelpers.swift */; };
+		CEBB4AC52775C7F000065A36 /* UIRefreshControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AC42775C7F000065A36 /* UIRefreshControl+TestHelpers.swift */; };
+		CEBB4AC72775C80C00065A36 /* UIControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AC62775C80C00065A36 /* UIControl+TestHelpers.swift */; };
+		CEBB4AC92775C82800065A36 /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AC82775C82800065A36 /* UIImage+TestHelpers.swift */; };
+		CEBB4ACB2775C96300065A36 /* PopularCollection+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4ACA2775C96300065A36 /* PopularCollection+TestHelpers.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -92,8 +100,16 @@
 		CEBB4A8B2771D25B00065A36 /* RemoteImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageDataLoader.swift; sourceTree = "<group>"; };
 		CEBB4A9227730B1000065A36 /* ShowTimeiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBB4A9927730B1100065A36 /* ShowTimeiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEBB4A9E27730B1100065A36 /* ShowTimeiOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTimeiOSTests.swift; sourceTree = "<group>"; };
 		CEBB4AA827730D8200065A36 /* PopularCollectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewControllerTests.swift; sourceTree = "<group>"; };
+		CEBB4AB22775C5B700065A36 /* PopularMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieCell.swift; sourceTree = "<group>"; };
+		CEBB4AB52775C5EC00065A36 /* PopularCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewController.swift; sourceTree = "<group>"; };
+		CEBB4AB82775C66900065A36 /* UIView+Shimmering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shimmering.swift"; sourceTree = "<group>"; };
+		CEBB4AC02775C72E00065A36 /* PopularCollectionViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopularCollectionViewController+TestHelpers.swift"; sourceTree = "<group>"; };
+		CEBB4AC22775C7C700065A36 /* PopularMovieCell+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopularMovieCell+TestHelpers.swift"; sourceTree = "<group>"; };
+		CEBB4AC42775C7F000065A36 /* UIRefreshControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+TestHelpers.swift"; sourceTree = "<group>"; };
+		CEBB4AC62775C80C00065A36 /* UIControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+TestHelpers.swift"; sourceTree = "<group>"; };
+		CEBB4AC82775C82800065A36 /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
+		CEBB4ACA2775C96300065A36 /* PopularCollection+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopularCollection+TestHelpers.swift"; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -278,6 +294,8 @@
 		CEBB4A9327730B1000065A36 /* ShowTimeiOS */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4AB72775C64E00065A36 /* Helpers */,
+				CEBB4AB02775C59A00065A36 /* Popular Collection */,
 			);
 			path = ShowTimeiOS;
 			sourceTree = "<group>";
@@ -285,8 +303,7 @@
 		CEBB4A9D27730B1100065A36 /* ShowTimeiOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				CEBB4A9E27730B1100065A36 /* ShowTimeiOSTests.swift */,
-				CEBB4AA827730D8200065A36 /* PopularCollectionViewControllerTests.swift */,
+				CEBB4ABA2775C6A900065A36 /* Popular Collection */,
 			);
 			path = ShowTimeiOSTests;
 			sourceTree = "<group>";
@@ -296,6 +313,69 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEBB4AB02775C59A00065A36 /* Popular Collection */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4AB42775C5E200065A36 /* View Controllers */,
+				CEBB4AB12775C5B000065A36 /* Views */,
+			);
+			path = "Popular Collection";
+			sourceTree = "<group>";
+		};
+		CEBB4AB12775C5B000065A36 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4AB22775C5B700065A36 /* PopularMovieCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CEBB4AB42775C5E200065A36 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4AB52775C5EC00065A36 /* PopularCollectionViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		CEBB4AB72775C64E00065A36 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4AB82775C66900065A36 /* UIView+Shimmering.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		CEBB4ABA2775C6A900065A36 /* Popular Collection */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4ABB2775C6B400065A36 /* View Controllers */,
+			);
+			path = "Popular Collection";
+			sourceTree = "<group>";
+		};
+		CEBB4ABB2775C6B400065A36 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4ABD2775C6F300065A36 /* Helpers */,
+				CEBB4AA827730D8200065A36 /* PopularCollectionViewControllerTests.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		CEBB4ABD2775C6F300065A36 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4AC02775C72E00065A36 /* PopularCollectionViewController+TestHelpers.swift */,
+				CEBB4AC22775C7C700065A36 /* PopularMovieCell+TestHelpers.swift */,
+				CEBB4AC42775C7F000065A36 /* UIRefreshControl+TestHelpers.swift */,
+				CEBB4AC62775C80C00065A36 /* UIControl+TestHelpers.swift */,
+				CEBB4AC82775C82800065A36 /* UIImage+TestHelpers.swift */,
+				CEBB4ACA2775C96300065A36 /* PopularCollection+TestHelpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		CEDA25632770528000452221 = {
@@ -445,6 +525,7 @@
 				TargetAttributes = {
 					CEBB4A9127730B1000065A36 = {
 						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1320;
 					};
 					CEBB4A9827730B1100065A36 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -515,6 +596,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4AB92775C66900065A36 /* UIView+Shimmering.swift in Sources */,
+				CEBB4AB62775C5EC00065A36 /* PopularCollectionViewController.swift in Sources */,
+				CEBB4AB32775C5B700065A36 /* PopularMovieCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,8 +606,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4AC32775C7C700065A36 /* PopularMovieCell+TestHelpers.swift in Sources */,
+				CEBB4ACB2775C96300065A36 /* PopularCollection+TestHelpers.swift in Sources */,
+				CEBB4AC52775C7F000065A36 /* UIRefreshControl+TestHelpers.swift in Sources */,
+				CEBB4AC12775C72E00065A36 /* PopularCollectionViewController+TestHelpers.swift in Sources */,
+				CEBB4AC72775C80C00065A36 /* UIControl+TestHelpers.swift in Sources */,
 				CEBB4AA927730D8200065A36 /* PopularCollectionViewControllerTests.swift in Sources */,
-				CEBB4A9F27730B1100065A36 /* ShowTimeiOSTests.swift in Sources */,
+				CEBB4AC92775C82800065A36 /* UIImage+TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +672,7 @@
 		CEBB4AA227730B1100065A36 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -605,6 +695,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -613,6 +704,7 @@
 		CEBB4AA327730B1100065A36 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -644,6 +736,7 @@
 		CEBB4AA527730B1100065A36 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -661,6 +754,7 @@
 		CEBB4AA627730B1100065A36 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
