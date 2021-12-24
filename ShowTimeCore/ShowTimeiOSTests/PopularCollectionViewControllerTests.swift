@@ -12,7 +12,17 @@ import ShowTimeCore
 class PopularMovieCell: UICollectionViewCell {
     public var imageContainer = UIView()
     public var movieImageView = UIImageView()
-    public var retryButton = UIButton()
+    private(set) public lazy var retryButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(retryButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    var onRetry: (() -> Void)?
+
+    @objc private func retryButtonTapped() {
+        onRetry?()
+    }
 }
 
 class PopularCollectionViewController: UICollectionViewController {
@@ -62,15 +72,24 @@ class PopularCollectionViewController: UICollectionViewController {
         if let url = makePosterImageURL?(item) {
             cell.retryButton.isHidden = true
             cell.imageContainer.isShimmering = true
-            tasks[indexPath] = imageLoader?.load(from: url) { [weak cell] result in
-                if let data = try? result.get(), let image = UIImage(data: data) {
-                    cell?.movieImageView.image = image
-                } else {
-                    cell?.retryButton.isHidden = false
-                }
+            
+            
+            let loadImage = { [weak self] in
+                guard let self = self else { return }
                 
-                cell?.imageContainer.isShimmering = false
+                self.tasks[indexPath] = self.imageLoader?.load(from: url) { [weak cell] result in
+                    if let data = try? result.get(), let image = UIImage(data: data) {
+                        cell?.movieImageView.image = image
+                    } else {
+                        cell?.retryButton.isHidden = false
+                    }
+                    
+                    cell?.imageContainer.isShimmering = false
+                }
             }
+            
+            cell.onRetry = loadImage
+            loadImage()
         }
         
         return cell
@@ -257,7 +276,32 @@ class PopularCollectionViewControllerTests: XCTestCase {
         XCTAssertEqual(view?.isShowingRetryAction, true, "Expected retry action once image loading completes with invalid image data")
     }
     
-    
+    func test_movieImageViewRetryAction_retriesImageLoad() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
+        let url1 = anyURL().appendingPathComponent(movie1.imagePath)
+        let url2 = anyURL().appendingPathComponent(movie2.imagePath)
+        
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completePopularMoviesLoading(with: collection)
+
+        let view0 = sut.simulateMovieViewVisible(at: 0)
+        let view1 = sut.simulateMovieViewVisible(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [url1, url2], "Expected two image URL request for the two visible views")
+
+        loader.completeImageLoadingWithError(at: 0)
+        loader.completeImageLoadingWithError(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [url1, url2], "Expected only two image URL requests before retry action")
+
+        view0?.simulateRetryAction()
+        XCTAssertEqual(loader.loadedImageURLs, [url1, url2, url1], "Expected third imageURL request after first view retry action")
+
+        view1?.simulateRetryAction()
+        XCTAssertEqual(loader.loadedImageURLs, [url1, url2, url1, url2], "Expected fourth imageURL request after second view retry action")
+    }
     
     // MARK: - Helper
     
@@ -422,6 +466,10 @@ private extension PopularMovieCell {
     
     var isShowingRetryAction: Bool {
         !retryButton.isHidden
+    }
+    
+    func simulateRetryAction() {
+        retryButton.simulate(event: .touchUpInside)
     }
 }
 
