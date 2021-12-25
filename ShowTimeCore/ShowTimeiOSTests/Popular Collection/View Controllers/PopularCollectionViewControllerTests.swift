@@ -213,6 +213,22 @@ class PopularCollectionViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [url1, url2, url1, url2], "Expected fourth imageURL request after second view retry action")
     }
     
+    func test_loadPopularCollectionCompletion_dispatchesFromBackgroundToMainThread() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
+        
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+
+        let exp = expectation(description: "Wait for background queue")
+        DispatchQueue.global().async {
+            loader.completePopularMoviesLoading(with: collection)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {

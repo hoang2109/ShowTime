@@ -14,7 +14,7 @@ public class PopularCollectionUIComposer {
     private init() { }
     
     public static func compose(loader: PopularMoviesLoader, imageLoader: ImageDataLoader, baseImageURL: URL) -> PopularCollectionViewController {
-        let adapter = PopularCollectionViewPresentationAdapter(loader: loader)
+        let adapter = PopularCollectionViewPresentationAdapter(loader: MainQueueDispatchDecorator(decoratee: loader))
         let viewController = PopularCollectionViewController()
         viewController.delegate = adapter
 
@@ -50,6 +50,16 @@ extension WeakRefVirtualProxy: PopularMovieViewProtocol where T: PopularMovieVie
     
     func display(_ model: PopularMovieViewModel<UIImage>) {
         object?.display(model)
+    }
+}
+
+// MARK:- MainQueueDispatchDecorator
+
+extension MainQueueDispatchDecorator: PopularMoviesLoader where T == PopularMoviesLoader {
+    public func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
+        decoratee.load(request, completion: { [weak self] result in
+            self?.dispatch { completion(result) }
+        })
     }
 }
 

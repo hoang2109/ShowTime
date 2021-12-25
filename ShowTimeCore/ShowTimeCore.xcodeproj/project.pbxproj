@@ -50,6 +50,7 @@
 		CEBB4AE7277618A000065A36 /* PopularCollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AE6277618A000065A36 /* PopularCollectionViewAdapter.swift */; };
 		CEBB4AE92776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AE82776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift */; };
 		CEBB4AEB2776195800065A36 /* WeakRefVirtualProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AEA2776195800065A36 /* WeakRefVirtualProxy.swift */; };
+		CEBB4BB22777470F00065A36 /* MainQueueDispatchDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -134,6 +135,7 @@
 		CEBB4AE6277618A000065A36 /* PopularCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewAdapter.swift; sourceTree = "<group>"; };
 		CEBB4AE82776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieImageDataLoaderPresentationAdapter.swift; sourceTree = "<group>"; };
 		CEBB4AEA2776195800065A36 /* WeakRefVirtualProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRefVirtualProxy.swift; sourceTree = "<group>"; };
+		CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueDispatchDecorator.swift; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -416,6 +418,7 @@
 			children = (
 				CEBB4ADE2775D50200065A36 /* UIFont+Ext.swift */,
 				CEBB4AEA2776195800065A36 /* WeakRefVirtualProxy.swift */,
+				CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4BB22777470F00065A36 /* MainQueueDispatchDecorator.swift in Sources */,
 				CEBB4AE7277618A000065A36 /* PopularCollectionViewAdapter.swift in Sources */,
 				CEBB4AD82775CD3000065A36 /* PopularMoviePresenter.swift in Sources */,
 				CEBB4AEB2776195800065A36 /* WeakRefVirtualProxy.swift in Sources */,
