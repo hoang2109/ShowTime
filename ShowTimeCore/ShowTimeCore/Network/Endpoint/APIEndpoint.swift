@@ -14,13 +14,13 @@ public enum APIEndpoint {
         switch self {
         case let .popularMovies(page, language):
             let requestURL = baseURL
-              .appendingPathComponent("3")
-              .appendingPathComponent("movie")
-
+                .appendingPathComponent("3")
+                .appendingPathComponent("movie")
+                .appendingPathComponent("popular")
             var urlComponents = URLComponents(url: requestURL, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = [
-              URLQueryItem(name: "language", value: language),
-              URLQueryItem(name: "page", value: "\(page)")
+                URLQueryItem(name: "language", value: language),
+                URLQueryItem(name: "page", value: "\(page)")
             ]
             return urlComponents?.url ?? requestURL
         }

@@ -217,9 +217,7 @@ class PopularCollectionViewControllerTests: XCTestCase {
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let viewController = PopularCollectionViewController(popularMoviesLoader: loader, imageLoader: loader) { [unowned self] movie in
-            self.anyURL().appendingPathComponent(movie.imagePath)
-        }
+        let viewController = PopularCollectionUIComposer.compose(loader: loader, imageLoader: loader, baseImageURL: anyURL())
         
         return (viewController, loader)
     }
