@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:ShowTimeApp/ShowTimeApp.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:ShowTimeCore/ShowTimeCore.xcodeproj">
    </FileRef>
 </Workspace>
