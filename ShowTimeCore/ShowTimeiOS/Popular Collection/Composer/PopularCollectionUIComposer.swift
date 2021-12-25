@@ -21,7 +21,7 @@ public class PopularCollectionUIComposer {
         adapter.presenter = PopularCollectionViewPresenter(
             popularCollectionView: PopularCollectionViewAdapter(
                 controller: viewController,
-                imageLoader: imageLoader,
+                imageLoader: MainQueueDispatchDecorator(decoratee: imageLoader),
                 baseImageURL: baseImageURL),
             loadingView: WeakRefVirtualProxy(viewController)
         )
@@ -58,6 +58,14 @@ extension WeakRefVirtualProxy: PopularMovieViewProtocol where T: PopularMovieVie
 extension MainQueueDispatchDecorator: PopularMoviesLoader where T == PopularMoviesLoader {
     public func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
         decoratee.load(request, completion: { [weak self] result in
+            self?.dispatch { completion(result) }
+        })
+    }
+}
+
+extension MainQueueDispatchDecorator: ImageDataLoader where T == ImageDataLoader {
+    public func load(from imageURL: URL, completion: @escaping (ImageDataLoader.Result) -> Void) -> ImageDataLoaderTask {
+        decoratee.load(from: imageURL, completion: { [weak self] result in
             self?.dispatch { completion(result) }
         })
     }
