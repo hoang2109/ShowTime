@@ -9,7 +9,7 @@ import Foundation
 
 struct RemoteMovie: Decodable {
     let id: Int
-    let poster_path: String
+    let poster_path: String?
     let title: String
     
     var toModel: Movie {

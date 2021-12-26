@@ -25,9 +25,11 @@ final class PopularMovieImageDataLoaderPresentationAdapter<View: PopularMovieVie
     }
     
     func didRequestImage() {
+        guard let imagePath = model.imagePath else { return }
+        
         presenter?.didStartLoadingImageData(for: model)
         
-        task = imageLoader.load(from: makeImageURL(withPath: model.imagePath), completion: { [weak self, model] result in
+        task = imageLoader.load(from: makeImageURL(withPath: imagePath), completion: { [weak self, model] result in
             guard let self = self else { return }
             switch result {
             case let .success(imageData):

@@ -80,9 +80,10 @@ class PopularCollectionViewControllerTests: XCTestCase {
     func test_movieImageView_loadsImageURLWhenVisible() {
         let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
         let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
-        let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
-        let url1 = anyURL().appendingPathComponent(movie1.imagePath)
-        let url2 = anyURL().appendingPathComponent(movie2.imagePath)
+        let movie3 = makeMovieItem(id: 3, title: "another movie 3", imagePath: nil)
+        let collection = makePopularCollection(items: [movie1, movie2, movie3], page: 1, totalPages: 1)
+        let url1 = anyURL().appendingPathComponent(movie1.imagePath!)
+        let url2 = anyURL().appendingPathComponent(movie2.imagePath!)
         
         let (sut, loader) = makeSUT()
         
@@ -96,14 +97,17 @@ class PopularCollectionViewControllerTests: XCTestCase {
 
         sut.simulateMovieViewVisible(at: 1)
         XCTAssertEqual(loader.loadedImageURLs, [url1, url2], "Expected second image URL request once second view also becomes visible")
+        
+        sut.simulateMovieViewVisible(at: 2)
+        XCTAssertEqual(loader.loadedImageURLs, [url1, url2], "Expected not to load third image once third view also becomes visible")
     }
     
     func test_movieImageView_cancelsImageLoadingWhenNotVisibleAnymore() {
         let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
         let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
         let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
-        let url1 = anyURL().appendingPathComponent(movie1.imagePath)
-        let url2 = anyURL().appendingPathComponent(movie2.imagePath)
+        let url1 = anyURL().appendingPathComponent(movie1.imagePath!)
+        let url2 = anyURL().appendingPathComponent(movie2.imagePath!)
         
         let (sut, loader) = makeSUT()
 
@@ -190,8 +194,8 @@ class PopularCollectionViewControllerTests: XCTestCase {
         let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
         let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
         let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
-        let url1 = anyURL().appendingPathComponent(movie1.imagePath)
-        let url2 = anyURL().appendingPathComponent(movie2.imagePath)
+        let url1 = anyURL().appendingPathComponent(movie1.imagePath!)
+        let url2 = anyURL().appendingPathComponent(movie2.imagePath!)
         
         let (sut, loader) = makeSUT()
 
@@ -271,13 +275,14 @@ class PopularCollectionViewControllerTests: XCTestCase {
         let view = sut.movieView(at: index)
         
         XCTAssertTrue(view is PopularMovieCell, "Expected \(PopularMovieCell.self) instance, got \(String(describing: view)) instead", file: file, line: line)
+        XCTAssertEqual((view as? PopularMovieCell)?.retryButton.isHidden, true, "Expected retry button is hidden at first", file: file,line: line)
     }
     
     private func makePopularCollection(items: [Movie] = [], page: Int = 1, totalPages: Int = 1) -> PopularCollection {
         PopularCollection(items: items, page: page, totalPages: totalPages)
     }
     
-    private func makeMovieItem(id: Int, title: String, imagePath: String) -> Movie {
+    private func makeMovieItem(id: Int, title: String, imagePath: String?) -> Movie {
         Movie(id: id, title: title, imagePath: imagePath)
     }
     

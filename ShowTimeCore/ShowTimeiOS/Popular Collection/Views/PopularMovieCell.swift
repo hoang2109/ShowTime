@@ -53,6 +53,7 @@ public class PopularMovieCell: UICollectionViewCell {
         contentView.addSubview(imageContainer)
         imageContainer.addSubview(movieImageView)
         imageContainer.addSubview(retryButton)
+        retryButton.isHidden = true
         
         NSLayoutConstraint.activate([
             imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
