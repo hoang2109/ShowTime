@@ -17,7 +17,7 @@ public class PopularCollectionViewController: UICollectionViewController, Popula
     
     var delegate: PopularCollectionViewControllerDelegate?
     
-    var collectionModel = [PopularMovieCellController]() {
+    var items = [PopularMovieCellController]() {
         didSet { collectionView.reloadData() }
     }
     
@@ -101,7 +101,7 @@ public class PopularCollectionViewController: UICollectionViewController, Popula
     }
     
     public override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        collectionModel.count
+        items.count
     }
     
     public override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -113,7 +113,7 @@ public class PopularCollectionViewController: UICollectionViewController, Popula
     }
     
     private func cellController(forRowAt indexPath: IndexPath) -> PopularMovieCellController {
-        return collectionModel[indexPath.row]
+        return items[indexPath.row]
     }
     
     private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {

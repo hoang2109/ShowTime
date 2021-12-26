@@ -24,7 +24,7 @@ final class PopularCollectionViewAdapter {
 
 extension PopularCollectionViewAdapter: PopularCollectionViewProtocol {
     func display(_ viewModel: PopularCollectionViewModel) {
-        controller?.collectionModel = viewModel.movies.map(makeCellController(for:))
+        controller?.items = viewModel.movies.map(makeCellController(for:))
     }
     
     private func makeCellController(for model: Movie) -> PopularMovieCellController {
