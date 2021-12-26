@@ -44,7 +44,6 @@
 		CEBB4AD62775CC0F00065A36 /* PopularCollectionViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AD52775CC0F00065A36 /* PopularCollectionViewPresenter.swift */; };
 		CEBB4AD82775CD3000065A36 /* PopularMoviePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AD72775CD3000065A36 /* PopularMoviePresenter.swift */; };
 		CEBB4ADC2775CF0C00065A36 /* UIImageView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4ADB2775CF0C00065A36 /* UIImageView+Animations.swift */; };
-		CEBB4ADF2775D50200065A36 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4ADE2775D50200065A36 /* UIFont+Ext.swift */; };
 		CEBB4AE227760C7C00065A36 /* PopularCollectionUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AE127760C7C00065A36 /* PopularCollectionUIComposer.swift */; };
 		CEBB4AE52776187B00065A36 /* PopularCollectionViewPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AE42776187B00065A36 /* PopularCollectionViewPresentationAdapter.swift */; };
 		CEBB4AE7277618A000065A36 /* PopularCollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AE6277618A000065A36 /* PopularCollectionViewAdapter.swift */; };
@@ -131,7 +130,6 @@
 		CEBB4AD52775CC0F00065A36 /* PopularCollectionViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewPresenter.swift; sourceTree = "<group>"; };
 		CEBB4AD72775CD3000065A36 /* PopularMoviePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviePresenter.swift; sourceTree = "<group>"; };
 		CEBB4ADB2775CF0C00065A36 /* UIImageView+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Animations.swift"; sourceTree = "<group>"; };
-		CEBB4ADE2775D50200065A36 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
 		CEBB4AE127760C7C00065A36 /* PopularCollectionUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionUIComposer.swift; sourceTree = "<group>"; };
 		CEBB4AE42776187B00065A36 /* PopularCollectionViewPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewPresentationAdapter.swift; sourceTree = "<group>"; };
 		CEBB4AE6277618A000065A36 /* PopularCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewAdapter.swift; sourceTree = "<group>"; };
@@ -422,7 +420,6 @@
 		CEBB4ADD2775D4FB00065A36 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				CEBB4ADE2775D50200065A36 /* UIFont+Ext.swift */,
 				CEBB4AEA2776195800065A36 /* WeakRefVirtualProxy.swift */,
 				CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */,
 			);
@@ -674,7 +671,6 @@
 				CEBB4AB92775C66900065A36 /* UIView+Shimmering.swift in Sources */,
 				CEBB4AE92776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift in Sources */,
 				CEBB4AB62775C5EC00065A36 /* PopularCollectionViewController.swift in Sources */,
-				CEBB4ADF2775D50200065A36 /* UIFont+Ext.swift in Sources */,
 				CEBB4BB827775D1D00065A36 /* PopularCollectionPagingViewModel.swift in Sources */,
 				CEBB4AE227760C7C00065A36 /* PopularCollectionUIComposer.swift in Sources */,
 				CEBB4AD62775CC0F00065A36 /* PopularCollectionViewPresenter.swift in Sources */,

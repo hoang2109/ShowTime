@@ -17,7 +17,7 @@
                BlueprintIdentifier = "CEBB4B6C277622D200065A36"
                BuildableName = "ShowTimeApp.app"
                BlueprintName = "ShowTimeApp"
-               ReferencedContainer = "container:ShowTimeApp.xcodeproj">
+               ReferencedContainer = "container:ShowTimeApp/ShowTimeApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "CEBB4B6C277622D200065A36"
             BuildableName = "ShowTimeApp.app"
             BlueprintName = "ShowTimeApp"
-            ReferencedContainer = "container:ShowTimeApp.xcodeproj">
+            ReferencedContainer = "container:ShowTimeApp/ShowTimeApp.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -47,7 +47,7 @@
                BlueprintIdentifier = "CEBB4B82277622D500065A36"
                BuildableName = "ShowTimeAppTests.xctest"
                BlueprintName = "ShowTimeAppTests"
-               ReferencedContainer = "container:ShowTimeApp.xcodeproj">
+               ReferencedContainer = "container:ShowTimeApp/ShowTimeApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -69,7 +69,7 @@
             BlueprintIdentifier = "CEBB4B6C277622D200065A36"
             BuildableName = "ShowTimeApp.app"
             BlueprintName = "ShowTimeApp"
-            ReferencedContainer = "container:ShowTimeApp.xcodeproj">
+            ReferencedContainer = "container:ShowTimeApp/ShowTimeApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -86,7 +86,7 @@
             BlueprintIdentifier = "CEBB4B6C277622D200065A36"
             BuildableName = "ShowTimeApp.app"
             BlueprintName = "ShowTimeApp"
-            ReferencedContainer = "container:ShowTimeApp.xcodeproj">
+            ReferencedContainer = "container:ShowTimeApp/ShowTimeApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

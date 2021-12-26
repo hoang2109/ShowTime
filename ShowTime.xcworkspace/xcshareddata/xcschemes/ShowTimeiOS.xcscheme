@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEDA256C2770528000452221"
-               BuildableName = "ShowTimeCore.framework"
-               BlueprintName = "ShowTimeCore"
-               ReferencedContainer = "container:ShowTimeCore.xcodeproj">
+               BlueprintIdentifier = "CEBB4A9127730B1000065A36"
+               BuildableName = "ShowTimeiOS.framework"
+               BlueprintName = "ShowTimeiOS"
+               ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CEDA256C2770528000452221"
-            BuildableName = "ShowTimeCore.framework"
-            BlueprintName = "ShowTimeCore"
-            ReferencedContainer = "container:ShowTimeCore.xcodeproj">
+            BlueprintIdentifier = "CEBB4A9127730B1000065A36"
+            BuildableName = "ShowTimeiOS.framework"
+            BlueprintName = "ShowTimeiOS"
+            ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -44,10 +44,10 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEDA25742770528100452221"
-               BuildableName = "ShowTimeCoreTests.xctest"
-               BlueprintName = "ShowTimeCoreTests"
-               ReferencedContainer = "container:ShowTimeCore.xcodeproj">
+               BlueprintIdentifier = "CEBB4A9827730B1100065A36"
+               BuildableName = "ShowTimeiOSTests.xctest"
+               BlueprintName = "ShowTimeiOSTests"
+               ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -72,10 +72,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CEDA256C2770528000452221"
-            BuildableName = "ShowTimeCore.framework"
-            BlueprintName = "ShowTimeCore"
-            ReferencedContainer = "container:ShowTimeCore.xcodeproj">
+            BlueprintIdentifier = "CEBB4A9127730B1000065A36"
+            BuildableName = "ShowTimeiOS.framework"
+            BlueprintName = "ShowTimeiOS"
+            ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

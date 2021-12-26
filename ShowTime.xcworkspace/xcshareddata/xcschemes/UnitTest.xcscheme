@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "1320"
+   version = "1.3">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CEDA256C2770528000452221"
+               BuildableName = "ShowTimeCore.framework"
+               BlueprintName = "ShowTimeCore"
+               ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CEDA256C2770528000452221"
+            BuildableName = "ShowTimeCore.framework"
+            BlueprintName = "ShowTimeCore"
+            ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CEBB4A9127730B1000065A36"
+            BuildableName = "ShowTimeiOS.framework"
+            BlueprintName = "ShowTimeiOS"
+            ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CEBB4B6C277622D200065A36"
+            BuildableName = "ShowTimeApp.app"
+            BlueprintName = "ShowTimeApp"
+            ReferencedContainer = "container:ShowTimeApp/ShowTimeApp.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CEDA25742770528100452221"
+               BuildableName = "ShowTimeCoreTests.xctest"
+               BlueprintName = "ShowTimeCoreTests"
+               ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CEBB4A9827730B1100065A36"
+               BuildableName = "ShowTimeiOSTests.xctest"
+               BlueprintName = "ShowTimeiOSTests"
+               ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CEBB4B82277622D500065A36"
+               BuildableName = "ShowTimeAppTests.xctest"
+               BlueprintName = "ShowTimeAppTests"
+               ReferencedContainer = "container:ShowTimeApp/ShowTimeApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CEDA256C2770528000452221"
+            BuildableName = "ShowTimeCore.framework"
+            BlueprintName = "ShowTimeCore"
+            ReferencedContainer = "container:ShowTimeCore/ShowTimeCore.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
