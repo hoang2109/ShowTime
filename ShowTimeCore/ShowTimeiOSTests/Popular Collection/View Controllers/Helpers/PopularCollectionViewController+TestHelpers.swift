@@ -44,4 +44,16 @@ extension PopularCollectionViewController {
         let indexPath = IndexPath(row: index, section: 0)
         dl?.collectionView?(collectionView, didEndDisplaying: view, forItemAt: indexPath)
     }
+    
+    func simulateScrollToBottom() {
+        let scrollView = DraggingScrollView()
+        scrollView.contentOffset.y = 1000
+        scrollViewDidScroll(scrollView)
+    }
+}
+
+private class DraggingScrollView: UIScrollView {
+    override var isDragging: Bool {
+        true
+    }
 }

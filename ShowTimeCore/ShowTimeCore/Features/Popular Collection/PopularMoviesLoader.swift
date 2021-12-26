@@ -7,13 +7,13 @@
 
 import Foundation
 
-public struct PopularMoviesRequest {
+public struct PopularMoviesRequest: Equatable {
     public let page: Int
     public let language: String
-
+    
     public init(page: Int, language: String = "en-US") {
-      self.page = page
-      self.language = language
+        self.page = page
+        self.language = language
     }
 }
 

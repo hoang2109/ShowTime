@@ -23,6 +23,12 @@ class PopularCollectionPagingController {
         self.viewModel = nil
         delegate.didRequestPopularCollection(at: 1)
     }
+    
+    func loadNextPage() {
+        if let viewModel = viewModel, let nextPage = viewModel.nextPage {
+            delegate.didRequestPopularCollection(at: nextPage)
+        }
+    }
 }
 
 extension PopularCollectionPagingController: PopularCollectionPagingViewProtocol {

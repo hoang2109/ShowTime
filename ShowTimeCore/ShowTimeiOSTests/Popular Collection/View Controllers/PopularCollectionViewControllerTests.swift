@@ -253,6 +253,23 @@ class PopularCollectionViewControllerTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func test_scrollToButtom_requestsNextPage() {
+        let (sut, loader) = makeSUT()
+        let items = Array(0..<25).map { index in
+            makeMovieItem(id: index, title: "movie \(index)", imagePath: "movie_\(1)")
+        }
+        let collection = PopularCollection(items: items, page: 1, totalPages: 2)
+        
+        sut.loadViewIfNeeded()
+        loader.completePopularMoviesLoading(with: collection)
+        
+        XCTAssertEqual(loader.popularCollectionRequests, [PopularMoviesRequest(page: 1)])
+        
+        sut.simulateScrollToBottom()
+        
+        XCTAssertEqual(loader.popularCollectionRequests, [PopularMoviesRequest(page: 1), PopularMoviesRequest(page: 2)])
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
@@ -298,22 +315,26 @@ class PopularCollectionViewControllerTests: XCTestCase {
     private class LoaderSpy: PopularMoviesLoader, ImageDataLoader {
         
         // MARK: - PopularMoviesLoader
-        private var popularMoviesLoaderCompletions = [(PopularMoviesLoader.Result) -> Void]()
+        private var popularMoviesLoaderCompletions = [(request: PopularMoviesRequest, completion: (PopularMoviesLoader.Result) -> Void)]()
         
         var popularMoviesLoaderCount: Int {
             return popularMoviesLoaderCompletions.count
         }
         
+        var popularCollectionRequests: [PopularMoviesRequest] {
+            return popularMoviesLoaderCompletions.map { $0.request }
+        }
+        
         func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
-            popularMoviesLoaderCompletions.append(completion)
+            popularMoviesLoaderCompletions.append((request, completion))
         }
         
         func completePopularMoviesLoading(with collection: PopularCollection, at index: Int = 0) {
-            popularMoviesLoaderCompletions[index](.success(collection))
+            popularMoviesLoaderCompletions[index].completion(.success(collection))
         }
         
         func completePopularMoviesLoading(with error: NSError, at index: Int = 0) {
-            popularMoviesLoaderCompletions[index](.failure(error))
+            popularMoviesLoaderCompletions[index].completion(.failure(error))
         }
         
         // MARK: - ImageDataLoader
