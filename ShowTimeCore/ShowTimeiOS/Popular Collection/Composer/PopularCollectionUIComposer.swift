@@ -15,15 +15,16 @@ public class PopularCollectionUIComposer {
     
     public static func compose(loader: PopularMoviesLoader, imageLoader: ImageDataLoader, baseImageURL: URL) -> PopularCollectionViewController {
         let adapter = PopularCollectionViewPresentationAdapter(loader: MainQueueDispatchDecorator(decoratee: loader))
-        let viewController = PopularCollectionViewController()
-        viewController.delegate = adapter
+        let pagingController = PopularCollectionPagingController(delegate: adapter)
+        let viewController = PopularCollectionViewController(pagingController: pagingController)
 
         adapter.presenter = PopularCollectionViewPresenter(
             popularCollectionView: PopularCollectionViewAdapter(
                 controller: viewController,
                 imageLoader: MainQueueDispatchDecorator(decoratee: imageLoader),
                 baseImageURL: baseImageURL),
-            loadingView: WeakRefVirtualProxy(viewController)
+            loadingView: WeakRefVirtualProxy(viewController),
+            pagingView: pagingController
         )
         viewController.title = PopularCollectionViewPresenter.title
         return viewController

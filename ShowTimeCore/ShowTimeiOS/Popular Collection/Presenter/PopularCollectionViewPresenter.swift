@@ -16,14 +16,20 @@ protocol PopularCollectionViewProtocol {
     func display(_ viewModel: PopularCollectionViewModel)
 }
 
+public protocol PopularCollectionPagingViewProtocol {
+    func display(_ viewModel: PopularCollectionPagingViewModel)
+}
+
 final class PopularCollectionViewPresenter {
 
     private let popularCollectionView: PopularCollectionViewProtocol
     private let loadingView: PopularCollectionLoadingViewProtocol
+    private let pagingView: PopularCollectionPagingViewProtocol
     
-    init(popularCollectionView: PopularCollectionViewProtocol, loadingView: PopularCollectionLoadingViewProtocol) {
+    init(popularCollectionView: PopularCollectionViewProtocol, loadingView: PopularCollectionLoadingViewProtocol, pagingView: PopularCollectionPagingViewProtocol) {
         self.popularCollectionView = popularCollectionView
         self.loadingView = loadingView
+        self.pagingView = pagingView
     }
     
     static var title: String {
@@ -34,9 +40,10 @@ final class PopularCollectionViewPresenter {
         loadingView.display(PopularCollectionLoadingViewModel(isLoading: true))
     }
 
-    func didFinishLoadingPopularMovies(with movies: [Movie]) {
-        popularCollectionView.display(PopularCollectionViewModel(movies: movies))
+    func didFinishLoadingPopularMovies(with collection: PopularCollection) {
+        popularCollectionView.display(PopularCollectionViewModel(page: collection.page, movies: collection.items))
         loadingView.display(PopularCollectionLoadingViewModel(isLoading: false))
+        pagingView.display(PopularCollectionPagingViewModel(isLast: collection.page == collection.totalPages, pageNumber: collection.page))
     }
 
     func didFinishLoadingPopularMovies(with error: Error) {

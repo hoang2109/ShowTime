@@ -9,13 +9,9 @@ import Foundation
 import ShowTimeCore
 import UIKit
 
-protocol PopularCollectionViewControllerDelegate {
-    func didRequestPopularCollection()
-}
-
 public class PopularCollectionViewController: UICollectionViewController, PopularCollectionLoadingViewProtocol {
     
-    var delegate: PopularCollectionViewControllerDelegate?
+    private var pagingController: PopularCollectionPagingController?
     
     var items = [PopularMovieCellController]() {
         didSet { collectionView.reloadData() }
@@ -23,8 +19,9 @@ public class PopularCollectionViewController: UICollectionViewController, Popula
     
     private var cellControllers = [IndexPath: PopularMovieCellController]()
     
-    convenience init() {
+    convenience init(pagingController: PopularCollectionPagingController) {
         self.init(collectionViewLayout: UICollectionViewFlowLayout())
+        self.pagingController = pagingController
     }
     
     public override func viewDidLoad() {
@@ -89,7 +86,7 @@ public class PopularCollectionViewController: UICollectionViewController, Popula
     }
     
     @IBAction private func refresh() {
-        delegate?.didRequestPopularCollection()
+        pagingController?.refresh()
     }
     
     func display(_ viewModel: PopularCollectionLoadingViewModel) {
@@ -113,14 +110,14 @@ public class PopularCollectionViewController: UICollectionViewController, Popula
     }
     
     public override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cancelCellControllerLoad(forRowAt: indexPath)
+        cancelCellControllerLoad(forItemAt: indexPath)
     }
     
     private func cellController(forItemAt indexPath: IndexPath) -> PopularMovieCellController {
         return items[indexPath.row]
     }
     
-    private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
+    private func cancelCellControllerLoad(forItemAt indexPath: IndexPath) {
         cellController(forItemAt: indexPath).cancelLoad()
     }
 }

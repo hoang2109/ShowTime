@@ -38,7 +38,7 @@ final class PopularMovieCellController: PopularMovieViewProtocol {
 
     func display(_ viewModel: PopularMovieViewModel<UIImage>) {        
         cell?.imageContainer.isShimmering = viewModel.isLoading
-        cell?.movieImageView.image = viewModel.image
+        cell?.movieImageView.setImageAnimated(viewModel.image)
         cell?.retryButton.isHidden = !viewModel.shouldRetry
         cell?.onRetry = delegate.didRequestImage
     }
@@ -47,3 +47,4 @@ final class PopularMovieCellController: PopularMovieViewProtocol {
         cell = nil
     }
 }
+

@@ -9,5 +9,6 @@ import Foundation
 import ShowTimeCore
 
 struct PopularCollectionViewModel {
+    let page: Int
     let movies: [Movie]
 }

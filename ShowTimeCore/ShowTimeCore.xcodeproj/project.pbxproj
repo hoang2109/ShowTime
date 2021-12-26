@@ -51,6 +51,8 @@
 		CEBB4AE92776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AE82776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift */; };
 		CEBB4AEB2776195800065A36 /* WeakRefVirtualProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AEA2776195800065A36 /* WeakRefVirtualProxy.swift */; };
 		CEBB4BB22777470F00065A36 /* MainQueueDispatchDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */; };
+		CEBB4BB6277756E400065A36 /* PopularCollectionPagingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB5277756E400065A36 /* PopularCollectionPagingController.swift */; };
+		CEBB4BB827775D1D00065A36 /* PopularCollectionPagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB727775D1D00065A36 /* PopularCollectionPagingViewModel.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -136,6 +138,8 @@
 		CEBB4AE82776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieImageDataLoaderPresentationAdapter.swift; sourceTree = "<group>"; };
 		CEBB4AEA2776195800065A36 /* WeakRefVirtualProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRefVirtualProxy.swift; sourceTree = "<group>"; };
 		CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueDispatchDecorator.swift; sourceTree = "<group>"; };
+		CEBB4BB5277756E400065A36 /* PopularCollectionPagingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionPagingController.swift; sourceTree = "<group>"; };
+		CEBB4BB727775D1D00065A36 /* PopularCollectionPagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionPagingViewModel.swift; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -368,6 +372,7 @@
 			children = (
 				CEBB4AB52775C5EC00065A36 /* PopularCollectionViewController.swift */,
 				CEBB4ACC2775CAAF00065A36 /* PopularMovieCellController.swift */,
+				CEBB4BB5277756E400065A36 /* PopularCollectionPagingController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -409,6 +414,7 @@
 				CEBB4AD32775CBE400065A36 /* PopularCollectionLoadingViewModel.swift */,
 				CEBB4AD52775CC0F00065A36 /* PopularCollectionViewPresenter.swift */,
 				CEBB4AD72775CD3000065A36 /* PopularMoviePresenter.swift */,
+				CEBB4BB727775D1D00065A36 /* PopularCollectionPagingViewModel.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -669,10 +675,12 @@
 				CEBB4AE92776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift in Sources */,
 				CEBB4AB62775C5EC00065A36 /* PopularCollectionViewController.swift in Sources */,
 				CEBB4ADF2775D50200065A36 /* UIFont+Ext.swift in Sources */,
+				CEBB4BB827775D1D00065A36 /* PopularCollectionPagingViewModel.swift in Sources */,
 				CEBB4AE227760C7C00065A36 /* PopularCollectionUIComposer.swift in Sources */,
 				CEBB4AD62775CC0F00065A36 /* PopularCollectionViewPresenter.swift in Sources */,
 				CEBB4AD22775CB9300065A36 /* PopularCollectionViewModel.swift in Sources */,
 				CEBB4AB32775C5B700065A36 /* PopularMovieCell.swift in Sources */,
+				CEBB4BB6277756E400065A36 /* PopularCollectionPagingController.swift in Sources */,
 				CEBB4AD42775CBE400065A36 /* PopularCollectionLoadingViewModel.swift in Sources */,
 				CEBB4AE52776187B00065A36 /* PopularCollectionViewPresentationAdapter.swift in Sources */,
 			);

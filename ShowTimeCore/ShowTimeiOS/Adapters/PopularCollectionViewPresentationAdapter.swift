@@ -19,15 +19,15 @@ final class PopularCollectionViewPresentationAdapter {
     }
 }
 
-extension PopularCollectionViewPresentationAdapter: PopularCollectionViewControllerDelegate {
-    func didRequestPopularCollection() {
+extension PopularCollectionViewPresentationAdapter: PopularCollectionPagingControllerDelegate {
+    func didRequestPopularCollection(at page: Int) {
         presenter?.didStartLoadingPopularMovies()
-        let request = PopularMoviesRequest(page: 1)
+        let request = PopularMoviesRequest(page: page)
         loader.load(request) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(collection):
-                self.presenter?.didFinishLoadingPopularMovies(with: collection.items)
+                self.presenter?.didFinishLoadingPopularMovies(with: collection)
             case let .failure(error):
                 self.presenter?.didFinishLoadingPopularMovies(with: error)
             }
