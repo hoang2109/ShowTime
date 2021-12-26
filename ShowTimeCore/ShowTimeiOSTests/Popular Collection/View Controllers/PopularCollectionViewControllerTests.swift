@@ -270,6 +270,23 @@ class PopularCollectionViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.popularCollectionRequests, [PopularMoviesRequest(page: 1), PopularMoviesRequest(page: 2)])
     }
     
+    func test_scrollToButtom_doesNotRequestNextPageOnFinalPage() {
+        let (sut, loader) = makeSUT()
+        let items = Array(0..<25).map { index in
+            makeMovieItem(id: index, title: "movie \(index)", imagePath: "movie_\(1)")
+        }
+        let collection = PopularCollection(items: items, page: 1, totalPages: 1)
+        
+        sut.loadViewIfNeeded()
+        loader.completePopularMoviesLoading(with: collection)
+        
+        XCTAssertEqual(loader.popularCollectionRequests, [PopularMoviesRequest(page: 1)])
+        
+        sut.simulateScrollToBottom()
+        
+        XCTAssertEqual(loader.popularCollectionRequests, [PopularMoviesRequest(page: 1)])
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
