@@ -311,6 +311,27 @@ class PopularCollectionViewControllerTests: XCTestCase {
         assertThat(sut, isRendering: page1.items + page2.items)
     }
     
+    func test_loadNextPageCompletion_doesNotAlterCurrentRenderStateOnError() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let page1 = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 2)
+        
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        assertThat(sut, isRendering: [])
+        
+        loader.completePopularMoviesLoading(with: page1)
+
+        assertThat(sut, isRendering: page1.items)
+        
+        sut.simulateScrollToBottom()
+        
+        loader.completePopularMoviesLoading(with: anyNSError())
+        
+        assertThat(sut, isRendering: page1.items)
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
