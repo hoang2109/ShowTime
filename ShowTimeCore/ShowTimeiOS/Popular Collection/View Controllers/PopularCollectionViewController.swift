@@ -12,11 +12,7 @@ import UIKit
 public class PopularCollectionViewController: UICollectionViewController, PopularCollectionLoadingViewProtocol {
     
     private var pagingController: PopularCollectionPagingController?
-    
-    var items = [PopularMovieCellController]() {
-        didSet { collectionView.reloadData() }
-    }
-    
+    private var items = [PopularMovieCellController]()
     private var cellControllers = [IndexPath: PopularMovieCellController]()
     
     convenience init(pagingController: PopularCollectionPagingController) {
@@ -27,6 +23,22 @@ public class PopularCollectionViewController: UICollectionViewController, Popula
     public override func viewDidLoad() {
         configureUI()
         refresh()
+    }
+    
+    func set(_ newItems: [PopularMovieCellController]) {
+        items = newItems
+        collectionView.reloadData()
+    }
+    
+    func append(_ newItems: [PopularMovieCellController]) {
+        let startIndex = items.count
+        let endIndex = startIndex + newItems.count
+        items += newItems
+        collectionView.performBatchUpdates {
+            collectionView.insertItems(at: (startIndex..<endIndex).map { item in
+                IndexPath(item: item, section: 0)
+            })
+        }
     }
     
     private func configureUI() {

@@ -47,17 +47,16 @@ class PopularCollectionViewControllerTests: XCTestCase {
         let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
         let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
         let collection = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 1)
-        let emptyCollection = makePopularCollection()
         
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
         
-        assertThat(sut, isRendering: emptyCollection)
+        assertThat(sut, isRendering: [])
         
         loader.completePopularMoviesLoading(with: collection)
         
-        assertThat(sut, isRendering: collection)
+        assertThat(sut, isRendering: collection.items)
     }
     
     func test_loadPopularMoviesCompletion_doesNotAlterCurrentRenderStateOnError() {
@@ -70,12 +69,12 @@ class PopularCollectionViewControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         loader.completePopularMoviesLoading(with: collection)
         
-        assertThat(sut, isRendering: collection)
+        assertThat(sut, isRendering: collection.items)
         
         sut.simulateUserInitiatedReload()
         loader.completePopularMoviesLoading(with: anyNSError(), at: 1)
         
-        assertThat(sut, isRendering: collection)
+        assertThat(sut, isRendering: collection.items)
     }
     
     func test_movieImageView_loadsImageURLWhenVisible() {
@@ -287,6 +286,31 @@ class PopularCollectionViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.popularCollectionRequests, [PopularMoviesRequest(page: 1)])
     }
     
+    func test_loadNextPageCompletion_renderSuccessfullyLoadedMovies() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let page1 = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 2)
+        
+        let movie3 = makeMovieItem(id: 3, title: "a movie", imagePath: "image3")
+        let movie4 = makeMovieItem(id: 4, title: "another movie", imagePath: "image4")
+        let page2 = makePopularCollection(items: [movie3, movie4], page: 2, totalPages: 2)
+        
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        assertThat(sut, isRendering: [])
+        
+        loader.completePopularMoviesLoading(with: page1)
+
+        assertThat(sut, isRendering: page1.items)
+        
+        sut.simulateScrollToBottom()
+        
+        loader.completePopularMoviesLoading(with: page2, at: 1)
+        
+        assertThat(sut, isRendering: page1.items + page2.items)
+    }
+    
     // MARK: - Helper
     
     private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
@@ -296,12 +320,12 @@ class PopularCollectionViewControllerTests: XCTestCase {
         return (viewController, loader)
     }
     
-    func assertThat(_ sut: PopularCollectionViewController, isRendering collection: PopularCollection, file: StaticString = #file, line: UInt = #line) {
-        guard sut.numberOfRenderedMovieViews() == collection.itemsCount else {
-            return XCTFail("Expected \(collection.itemsCount) movies, got \(sut.numberOfRenderedMovieViews()) instead.", file: file, line: line)
+    func assertThat(_ sut: PopularCollectionViewController, isRendering collection: [Movie], file: StaticString = #file, line: UInt = #line) {
+        guard sut.numberOfRenderedMovieViews() == collection.count else {
+            return XCTFail("Expected \(collection.count) movies, got \(sut.numberOfRenderedMovieViews()) instead.", file: file, line: line)
         }
 
-        collection.items.enumerated().forEach { index, image in
+        collection.enumerated().forEach { index, image in
             assertThat(sut, hasViewConfiguredFor: image, at: index, file: file, line: line)
         }
     }

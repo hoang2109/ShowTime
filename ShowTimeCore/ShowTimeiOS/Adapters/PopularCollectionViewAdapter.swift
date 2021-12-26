@@ -24,7 +24,12 @@ final class PopularCollectionViewAdapter {
 
 extension PopularCollectionViewAdapter: PopularCollectionViewProtocol {
     func display(_ viewModel: PopularCollectionViewModel) {
-        controller?.items = viewModel.movies.map(makeCellController(for:))
+        let cellControllers = viewModel.movies.map(makeCellController(for:))
+        if (viewModel.page == 1) {
+            controller?.set(cellControllers)
+        } else {
+            controller?.append(cellControllers)
+        }
     }
     
     private func makeCellController(for model: Movie) -> PopularMovieCellController {
