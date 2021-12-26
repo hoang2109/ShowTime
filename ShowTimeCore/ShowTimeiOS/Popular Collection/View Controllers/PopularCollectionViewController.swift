@@ -105,18 +105,22 @@ public class PopularCollectionViewController: UICollectionViewController, Popula
     }
     
     public override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return cellController(forRowAt: indexPath).view(in: collectionView, forItemAt: indexPath)
+        return cellController(forItemAt: indexPath).view(in: collectionView, forItemAt: indexPath)
+    }
+    
+    public override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cellController(forItemAt: indexPath).preload()
     }
     
     public override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         cancelCellControllerLoad(forRowAt: indexPath)
     }
     
-    private func cellController(forRowAt indexPath: IndexPath) -> PopularMovieCellController {
+    private func cellController(forItemAt indexPath: IndexPath) -> PopularMovieCellController {
         return items[indexPath.row]
     }
     
     private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
-        cellController(forRowAt: indexPath).cancelLoad()
+        cellController(forItemAt: indexPath).cancelLoad()
     }
 }

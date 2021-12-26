@@ -30,13 +30,18 @@ extension PopularCollectionViewController {
     
     @discardableResult
     func simulateMovieViewVisible(at index: Int) -> PopularMovieCell? {
-        movieView(at: index) as? PopularMovieCell
+        guard let cell = movieView(at: index) as? PopularMovieCell else { return nil }
+        
+        let indexPath = IndexPath(row: index, section: 0)
+        let dl = collectionView.delegate
+        dl?.collectionView?(collectionView, willDisplay: cell, forItemAt: indexPath)
+        return cell
     }
     
     func simulateMovieViewNotVisible(at index: Int) {
-        let view = movieView(at: index)
+        guard let view = simulateMovieViewVisible(at: index) else { return }
         let dl = collectionView.delegate
         let indexPath = IndexPath(row: index, section: 0)
-        dl?.collectionView?(collectionView, didEndDisplaying: view!, forItemAt: indexPath)
+        dl?.collectionView?(collectionView, didEndDisplaying: view, forItemAt: indexPath)
     }
 }

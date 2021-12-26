@@ -24,7 +24,6 @@ final class PopularMovieCellController: PopularMovieViewProtocol {
 
     func view(in collectionView: UICollectionView, forItemAt indexPath: IndexPath) -> UICollectionViewCell {
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PopularMovieCell", for: indexPath) as? PopularMovieCell
-        delegate.didRequestImage()
         return cell!
     }
 
