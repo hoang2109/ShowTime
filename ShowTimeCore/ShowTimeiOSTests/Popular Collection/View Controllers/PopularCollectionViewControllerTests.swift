@@ -19,6 +19,7 @@ class PopularCollectionViewControllerTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         XCTAssertEqual(loader.popularMoviesLoaderCount, 1, "Expected a loading request once view is loaded")
+        loader.completePopularMoviesLoading(with: PopularCollection(items: [], page: 1, totalPages: 1))
         
         sut.simulateUserInitiatedReload()
         XCTAssertEqual(loader.popularMoviesLoaderCount, 2, "Expected a loading request once view is loaded")

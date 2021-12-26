@@ -13,6 +13,7 @@ final class PopularCollectionViewPresentationAdapter {
     var presenter: PopularCollectionViewPresenter?
     
     private let loader: PopularMoviesLoader
+    private var isLoading = false
     
     init(loader: PopularMoviesLoader) {
         self.loader = loader
@@ -21,6 +22,8 @@ final class PopularCollectionViewPresentationAdapter {
 
 extension PopularCollectionViewPresentationAdapter: PopularCollectionPagingControllerDelegate {
     func didRequestPopularCollection(at page: Int) {
+        guard !isLoading else { return }
+        isLoading = true
         presenter?.didStartLoadingPopularMovies()
         let request = PopularMoviesRequest(page: page)
         loader.load(request) { [weak self] result in
@@ -31,6 +34,7 @@ extension PopularCollectionViewPresentationAdapter: PopularCollectionPagingContr
             case let .failure(error):
                 self.presenter?.didFinishLoadingPopularMovies(with: error)
             }
+            self.isLoading = false
         }
     }
 }
