@@ -29,15 +29,27 @@ class MovieDetailsViewControllerTests: XCTestCase {
         
         XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once view is loaded")
         
-        loader.completeMovieDetailLoading(with: item, at: 0)
+        loader.completeMovieDetailLoading(with: .success(item), at: 0)
         XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once loading completes successfully")
+    }
+    
+    func test_loadImage_requestsImageDataOnMovieDetailsLoadingSuccessful() {
+        let item = Movie(id: 1, title: "a movie", backdropImagePath: "backdropImage")
+        let (sut, loader) = makeSUT(1)
+        
+        sut.loadViewIfNeeded()
+        loader.completeMovieDetailLoading(with: .success(item))
+        
+        XCTAssertEqual(loader.requestedImageURLs, [anyURL().appendingPathComponent(item.backdropImagePath!)])
     }
     
     // MARK: - Helpers
     
     private func makeSUT(_ id: Int) -> (sut: MovieDetailsViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let viewController = MovieDetailsViewController(movieID: id, loader: loader)
+        let viewController = MovieDetailsViewController(movieID: id, movieDetailsloader: loader, imageDataLoader: loader) { [unowned self] imagePath in
+            self.anyURL().appendingPathComponent(imagePath)
+        }
         return (viewController, loader)
     }
     
@@ -45,8 +57,9 @@ class MovieDetailsViewControllerTests: XCTestCase {
         return Movie(id: id, title: title, imagePath: imagePath, rating: rating, length: length, genres: genres, overview: overview, backdropImagePath: backdropImagePath)
     }
     
-    private class LoaderSpy: MovieDetailLoader {
+    private class LoaderSpy: MovieDetailLoader, ImageDataLoader {
         
+        // MARK: - MovieDetailLoader
         private var movieDetailsCompletions = [(MovieDetailLoader.Result) -> Void]()
         var movieDetailsLoaderCount: Int {
             return movieDetailsCompletions.count
@@ -56,8 +69,26 @@ class MovieDetailsViewControllerTests: XCTestCase {
             movieDetailsCompletions.append(completion)
         }
         
-        func completeMovieDetailLoading(with movie: Movie, at index: Int = 0) {
-            movieDetailsCompletions[index](.success(movie))
+        func completeMovieDetailLoading(with result: MovieDetailLoader.Result, at index: Int = 0) {
+            movieDetailsCompletions[index](result)
+        }
+        
+        // MARK: - ImageDataLoader
+        
+        private var imageRequests = [(url: URL, completion: (ImageDataLoader.Result) -> Void)]()
+        var requestedImageURLs: [URL] {
+            return imageRequests.map { $0.url }
+        }
+        
+        struct TaskSpy: ImageDataLoaderTask {
+            func cancel() {
+                
+            }
+        }
+        
+        func load(from url: URL, completion: @escaping (ImageDataLoader.Result) -> Void) -> ImageDataLoaderTask {
+            imageRequests.append((url, completion))
+            return TaskSpy()
         }
     }
     

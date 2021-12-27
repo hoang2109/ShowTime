@@ -385,10 +385,6 @@ class PopularCollectionViewControllerTests: XCTestCase {
         Movie(id: id, title: title, imagePath: imagePath)
     }
     
-    private func anyURL() -> URL {
-        URL(string: "https://any-url.com")!
-    }
-    
     private func anyNSError() -> NSError {
         NSError(domain: "any error", code: 1)
     }

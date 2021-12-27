@@ -13,12 +13,16 @@ public final class MovieDetailsViewController: UIViewController {
     
     private(set) public lazy var movieDetailsView = view as! MovieDetailsView
     private var movieID: Int!
-    private var loader: MovieDetailLoader!
+    private var movieDetailsloader: MovieDetailLoader!
+    private var imageDataLoader: ImageDataLoader!
+    private var makeURL: ((String) -> URL)!
     
-    public convenience init(movieID: Int, loader: MovieDetailLoader) {
+    public convenience init(movieID: Int, movieDetailsloader: MovieDetailLoader, imageDataLoader: ImageDataLoader, makeURL: @escaping (String) -> URL) {
         self.init(nibName: nil, bundle: nil)
         self.movieID = movieID
-        self.loader = loader
+        self.movieDetailsloader = movieDetailsloader
+        self.imageDataLoader = imageDataLoader
+        self.makeURL = makeURL
     }
     
     public override func loadView() {
@@ -29,8 +33,16 @@ public final class MovieDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         movieDetailsView.isLoading = true
-        loader.load(movieID) { [weak self] _ in
-            self?.movieDetailsView.isLoading = false
+        movieDetailsloader.load(movieID) { [weak self] result in
+            guard let self = self else { return }
+            
+            if let movie = try? result.get(), let backdropImagePath = movie.backdropImagePath {
+                self.imageDataLoader.load(from: self.makeURL(backdropImagePath), completion: { _ in
+                    
+                })
+            }
+            
+            self.movieDetailsView.isLoading = false
         }
     }
 }
