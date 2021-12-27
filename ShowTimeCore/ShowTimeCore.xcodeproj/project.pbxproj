@@ -59,6 +59,7 @@
 		CEBB4BC82779EAEE00065A36 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BC72779EAEE00065A36 /* MovieDetailsViewController.swift */; };
 		CEBB4BCC2779EB4100065A36 /* MovieDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BCB2779EB4100065A36 /* MovieDetailsView.swift */; };
 		CEBB4BD02779EEFC00065A36 /* MovieDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BCF2779EEFC00065A36 /* MovieDetailsViewControllerTests.swift */; };
+		CEBB4BD32779F27A00065A36 /* XCTestCase+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BD22779F27A00065A36 /* XCTestCase+TestHelpers.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -152,6 +153,7 @@
 		CEBB4BC72779EAEE00065A36 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		CEBB4BCB2779EB4100065A36 /* MovieDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsView.swift; sourceTree = "<group>"; };
 		CEBB4BCF2779EEFC00065A36 /* MovieDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewControllerTests.swift; sourceTree = "<group>"; };
+		CEBB4BD22779F27A00065A36 /* XCTestCase+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+TestHelpers.swift"; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -349,6 +351,7 @@
 		CEBB4A9D27730B1100065A36 /* ShowTimeiOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4BD12779F26900065A36 /* Helpers */,
 				CEBB4BCD2779EED100065A36 /* Movie Details */,
 				CEBB4ABA2775C6A900065A36 /* Popular Collection */,
 			);
@@ -535,6 +538,14 @@
 				CEBB4BCF2779EEFC00065A36 /* MovieDetailsViewControllerTests.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CEBB4BD12779F26900065A36 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4BD22779F27A00065A36 /* XCTestCase+TestHelpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		CEDA25632770528000452221 = {
@@ -784,6 +795,7 @@
 				CEBB4BD02779EEFC00065A36 /* MovieDetailsViewControllerTests.swift in Sources */,
 				CEBB4AC32775C7C700065A36 /* PopularMovieCell+TestHelpers.swift in Sources */,
 				CEBB4ACB2775C96300065A36 /* PopularCollection+TestHelpers.swift in Sources */,
+				CEBB4BD32779F27A00065A36 /* XCTestCase+TestHelpers.swift in Sources */,
 				CEBB4AC52775C7F000065A36 /* UIRefreshControl+TestHelpers.swift in Sources */,
 				CEBB4AC12775C72E00065A36 /* PopularCollectionViewController+TestHelpers.swift in Sources */,
 				CEBB4AC72775C80C00065A36 /* UIControl+TestHelpers.swift in Sources */,

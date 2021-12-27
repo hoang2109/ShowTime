@@ -27,12 +27,10 @@ public final class MovieDetailsViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         
-        loader.load(movieID) { _ in }
-    }
-    
-    func configureUI() {
         movieDetailsView.isLoading = true
+        loader.load(movieID) { [weak self] _ in
+            self?.movieDetailsView.isLoading = false
+        }
     }
 }

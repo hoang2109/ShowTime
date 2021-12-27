@@ -9,7 +9,7 @@ import UIKit
 
 public final class MovieDetailsView: UIView {
     
-    var isLoading: Bool = false {
+    internal(set) public var isLoading: Bool = false {
         didSet {
             UIView.transition(with: self, duration: 0.33, options: .transitionCrossDissolve, animations: {
                 self.isLoading ? self.loadingIndicator.startAnimating() : self.loadingIndicator.stopAnimating()
