@@ -42,7 +42,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         let imageLoader = RemoteImageDataLoader(client: client)
         
-        let viewController = PopularCollectionUIComposer.compose(loader: loader, imageLoader: imageLoader, baseImageURL: SceneDelegate.imageBaseURL)
+        let viewController = PopularCollectionUIComposer.compose(loader: loader, imageLoader: imageLoader, baseImageURL: SceneDelegate.imageBaseURL) { _ in
+            
+        }
         return viewController
     }
 }

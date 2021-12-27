@@ -353,11 +353,12 @@ class PopularCollectionViewControllerTests: XCTestCase {
     
     // MARK: - Helper
     
-    private func makeSUT(onMovieSelection: @escaping (Int) -> Void = { _ in }) -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
+    private func makeSUT(onMovieSelection: @escaping (Int) -> Void = { _ in },  file: StaticString = #file, line: UInt = #line) -> (sut: PopularCollectionViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let viewController = PopularCollectionUIComposer.compose(loader: loader, imageLoader: loader, baseImageURL: anyURL(), onMovieSelection: onMovieSelection)
-        
-        return (viewController, loader)
+        let sut = PopularCollectionUIComposer.compose(loader: loader, imageLoader: loader, baseImageURL: anyURL(), onMovieSelection: onMovieSelection)
+        trackForMemoryLeaks(loader, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return (sut, loader)
     }
     
     func assertThat(_ sut: PopularCollectionViewController, isRendering collection: [Movie], file: StaticString = #file, line: UInt = #line) {

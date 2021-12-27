@@ -341,8 +341,8 @@
 		CEBB4A9327730B1000065A36 /* ShowTimeiOS */ = {
 			isa = PBXGroup;
 			children = (
-				CEBB4BC62779EADE00065A36 /* Movie Details */,
 				CEBB4ADD2775D4FB00065A36 /* Helpers */,
+				CEBB4BC62779EADE00065A36 /* Movie Details */,
 				CEBB4AB02775C59A00065A36 /* Popular Collection */,
 			);
 			path = ShowTimeiOS;

@@ -24,7 +24,7 @@ public class PopularCollectionUIComposer {
                 imageLoader: MainQueueDispatchDecorator(decoratee: imageLoader),
                 baseImageURL: baseImageURL, onMovieSelection: onMovieSelection),
             loadingView: WeakRefVirtualProxy(viewController),
-            pagingView: pagingController
+            pagingView: WeakRefVirtualProxy(pagingController)
         )
         viewController.title = PopularCollectionViewPresenter.title
         return viewController
@@ -51,6 +51,12 @@ extension WeakRefVirtualProxy: PopularMovieViewProtocol where T: PopularMovieVie
     
     func display(_ model: PopularMovieViewModel<UIImage>) {
         object?.display(model)
+    }
+}
+
+extension WeakRefVirtualProxy: PopularCollectionPagingViewProtocol where T: PopularCollectionPagingViewProtocol {
+    public func display(_ viewModel: PopularCollectionPagingViewModel) {
+        object?.display(viewModel)
     }
 }
 

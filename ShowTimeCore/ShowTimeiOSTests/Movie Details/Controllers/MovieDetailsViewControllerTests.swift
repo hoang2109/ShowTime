@@ -69,12 +69,14 @@ class MovieDetailsViewControllerTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(_ id: Int) -> (sut: MovieDetailsViewController, loader: LoaderSpy) {
+    private func makeSUT(_ id: Int, file: StaticString = #file, line: UInt = #line) -> (sut: MovieDetailsViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let viewController = MovieDetailsViewController(movieID: id, movieDetailsloader: loader, imageDataLoader: loader) { [unowned self] imagePath in
+        let sut = MovieDetailsViewController(movieID: id, movieDetailsloader: loader, imageDataLoader: loader) { [unowned self] imagePath in
             self.anyURL().appendingPathComponent(imagePath)
         }
-        return (viewController, loader)
+        trackForMemoryLeaks(loader, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return (sut, loader)
     }
     
     private func makeMovieDetails(id: Int, title: String, imagePath: String? = nil, rating: Float? = nil, length: Int? = nil, genres: [String] = [], overview: String = "", backdropImagePath: String? = nil) -> Movie {
