@@ -55,6 +55,18 @@ class MovieDetailsViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.metaText, "1 hr, 40 min | Action, Adventure")
     }
     
+    func test_loadImageCompletion_renderSuccessfullyLoadedImage() {
+        let item = Movie(id: 1, title: "a movie", imagePath: "imagePath", rating: 8, length: 100, genres: ["Action", "Adventure"], overview: "Overview", backdropImagePath: "backdropImagePath")
+        let imageData = UIImage.make(withColor: .blue).pngData()!
+        let (sut, loader) = makeSUT(1)
+        
+        sut.loadViewIfNeeded()
+        loader.completeMovieDetailLoading(with: .success(item))
+        loader.completeImageDataLoading(with: .success(imageData))
+        
+        XCTAssertEqual(sut.renderedImage, imageData)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(_ id: Int) -> (sut: MovieDetailsViewController, loader: LoaderSpy) {
@@ -102,6 +114,10 @@ class MovieDetailsViewControllerTests: XCTestCase {
             imageRequests.append((url, completion))
             return TaskSpy()
         }
+        
+        func completeImageDataLoading(with result: ImageDataLoader.Result, at index: Int = 0) {
+            imageRequests[index].completion(result)
+        }
     }
     
 }
@@ -121,5 +137,9 @@ private extension MovieDetailsViewController {
     
     var overViewText: String? {
         movieDetailsView.overviewLabel.text
+    }
+    
+    var renderedImage: Data? {
+        movieDetailsView.bakcgroundImageView.image?.pngData()
     }
 }

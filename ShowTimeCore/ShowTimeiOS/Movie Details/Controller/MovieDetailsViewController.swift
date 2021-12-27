@@ -37,8 +37,10 @@ public final class MovieDetailsViewController: UIViewController {
             guard let self = self else { return }
             
             if let movie = try? result.get(), let backdropImagePath = movie.backdropImagePath {
-                self.imageDataLoader.load(from: self.makeURL(backdropImagePath), completion: { _ in
-                    
+                self.imageDataLoader.load(from: self.makeURL(backdropImagePath), completion: { [weak self] result in
+                    if let data = try? result.get() {
+                        self?.movieDetailsView.bakcgroundImageView.image = UIImage(data: data)
+                    }
                 })
                 self.updateUIState(movie)
             }
