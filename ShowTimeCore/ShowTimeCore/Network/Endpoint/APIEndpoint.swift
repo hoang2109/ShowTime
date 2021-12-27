@@ -9,6 +9,7 @@ import Foundation
 
 public enum APIEndpoint {
     case popularMovies(page: Int, language: String)
+    case movieDetail(id: Int)
     
     public func url(baseURL: URL) -> URL {
         switch self {
@@ -23,6 +24,11 @@ public enum APIEndpoint {
                 URLQueryItem(name: "page", value: "\(page)")
             ]
             return urlComponents?.url ?? requestURL
+        case let .movieDetail(id):
+            return baseURL
+              .appendingPathComponent("3")
+              .appendingPathComponent("movie")
+              .appendingPathComponent("\(id)")
         }
     }
 }

@@ -52,6 +52,10 @@
 		CEBB4BB22777470F00065A36 /* MainQueueDispatchDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */; };
 		CEBB4BB6277756E400065A36 /* PopularCollectionPagingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB5277756E400065A36 /* PopularCollectionPagingController.swift */; };
 		CEBB4BB827775D1D00065A36 /* PopularCollectionPagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB727775D1D00065A36 /* PopularCollectionPagingViewModel.swift */; };
+		CEBB4BBC277865EE00065A36 /* MovieDetailLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BBB277865EE00065A36 /* MovieDetailLoader.swift */; };
+		CEBB4BC227786A2000065A36 /* RemoteMovieDetailLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BC127786A2000065A36 /* RemoteMovieDetailLoader.swift */; };
+		CEBB4BC427786AC500065A36 /* MovieDetailMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BC327786AC500065A36 /* MovieDetailMapper.swift */; };
+		CEBB4BC527786EEA00065A36 /* RemoteMovieDetailLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BBF277866AA00065A36 /* RemoteMovieDetailLoaderTests.swift */; };
 		CEDA25762770528100452221 /* ShowTimeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA256D2770528000452221 /* ShowTimeCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -138,6 +142,10 @@
 		CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueDispatchDecorator.swift; sourceTree = "<group>"; };
 		CEBB4BB5277756E400065A36 /* PopularCollectionPagingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionPagingController.swift; sourceTree = "<group>"; };
 		CEBB4BB727775D1D00065A36 /* PopularCollectionPagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionPagingViewModel.swift; sourceTree = "<group>"; };
+		CEBB4BBB277865EE00065A36 /* MovieDetailLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailLoader.swift; sourceTree = "<group>"; };
+		CEBB4BBF277866AA00065A36 /* RemoteMovieDetailLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailLoaderTests.swift; sourceTree = "<group>"; };
+		CEBB4BC127786A2000065A36 /* RemoteMovieDetailLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailLoader.swift; sourceTree = "<group>"; };
+		CEBB4BC327786AC500065A36 /* MovieDetailMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailMapper.swift; sourceTree = "<group>"; };
 		CEDA256D2770528000452221 /* ShowTimeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShowTimeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA25752770528100452221 /* ShowTimeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowTimeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -180,8 +188,10 @@
 		CEBB4A54277056CE00065A36 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4BB9277865B500065A36 /* Shared Models */,
 				CEBB4A872771D21B00065A36 /* Image Data Loader */,
 				CEBB4A55277056E900065A36 /* Popular Collection */,
+				CEBB4BBA277865C800065A36 /* Movie Detail */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -189,7 +199,6 @@
 		CEBB4A55277056E900065A36 /* Popular Collection */ = {
 			isa = PBXGroup;
 			children = (
-				CEBB4A58277057A600065A36 /* Movie.swift */,
 				CEBB4A5A2770584E00065A36 /* PopularCollection.swift */,
 				CEBB4A5C27705BCF00065A36 /* PopularMoviesLoader.swift */,
 			);
@@ -203,6 +212,7 @@
 				CEBB4A7F2771C2BB00065A36 /* Shared */,
 				CEBB4A6027705CDA00065A36 /* Popular Collection */,
 				CEBB4A812771C34800065A36 /* Image Data Loader */,
+				CEBB4BBE2778668A00065A36 /* Movie Detail */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -227,10 +237,12 @@
 		CEBB4A6627708F3B00065A36 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB4A6D27708FBD00065A36 /* Models */,
 				CEBB4A7B2771C21C00065A36 /* Shared */,
 				CEBB4A6827708F5B00065A36 /* Endpoint */,
 				CEBB4A6727708F4900065A36 /* Popular Collection */,
 				CEBB4A8A2771D24A00065A36 /* Image Data Loader */,
+				CEBB4BBD2778667400065A36 /* Movie Detail */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -238,7 +250,6 @@
 		CEBB4A6727708F4900065A36 /* Popular Collection */ = {
 			isa = PBXGroup;
 			children = (
-				CEBB4A6D27708FBD00065A36 /* Models */,
 				CEBB4A6B27708F8500065A36 /* RemotePopularMoviesLoader.swift */,
 				CEBB4A6E27708FCB00065A36 /* PopularMoviesMapper.swift */,
 			);
@@ -442,6 +453,39 @@
 				CEBB4AE82776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift */,
 			);
 			path = Adapters;
+			sourceTree = "<group>";
+		};
+		CEBB4BB9277865B500065A36 /* Shared Models */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4A58277057A600065A36 /* Movie.swift */,
+			);
+			path = "Shared Models";
+			sourceTree = "<group>";
+		};
+		CEBB4BBA277865C800065A36 /* Movie Detail */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4BBB277865EE00065A36 /* MovieDetailLoader.swift */,
+			);
+			path = "Movie Detail";
+			sourceTree = "<group>";
+		};
+		CEBB4BBD2778667400065A36 /* Movie Detail */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4BC127786A2000065A36 /* RemoteMovieDetailLoader.swift */,
+				CEBB4BC327786AC500065A36 /* MovieDetailMapper.swift */,
+			);
+			path = "Movie Detail";
+			sourceTree = "<group>";
+		};
+		CEBB4BBE2778668A00065A36 /* Movie Detail */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB4BBF277866AA00065A36 /* RemoteMovieDetailLoaderTests.swift */,
+			);
+			path = "Movie Detail";
 			sourceTree = "<group>";
 		};
 		CEDA25632770528000452221 = {
@@ -700,13 +744,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4BBC277865EE00065A36 /* MovieDetailLoader.swift in Sources */,
 				CEBB4A732770902600065A36 /* RemoteMovie.swift in Sources */,
 				CEBB4A7D2771C22A00065A36 /* URLSessionHTTPClient.swift in Sources */,
+				CEBB4BC427786AC500065A36 /* MovieDetailMapper.swift in Sources */,
 				CEBB4A8C2771D25B00065A36 /* RemoteImageDataLoader.swift in Sources */,
 				CEBB4A5D27705BCF00065A36 /* PopularMoviesLoader.swift in Sources */,
 				CEBB4A6C27708F8500065A36 /* RemotePopularMoviesLoader.swift in Sources */,
 				CEBB4A59277057A600065A36 /* Movie.swift in Sources */,
 				CEBB4A6F27708FCB00065A36 /* PopularMoviesMapper.swift in Sources */,
+				CEBB4BC227786A2000065A36 /* RemoteMovieDetailLoader.swift in Sources */,
 				CEBB4A782770918800065A36 /* HTTPClient.swift in Sources */,
 				CEBB4A5B2770584E00065A36 /* PopularCollection.swift in Sources */,
 				CEBB4A6A27708F6300065A36 /* APIEndpoint.swift in Sources */,
@@ -719,6 +766,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBB4BC527786EEA00065A36 /* RemoteMovieDetailLoaderTests.swift in Sources */,
 				CEBB4A65277089B600065A36 /* XCTestCase+TestHelpers.swift in Sources */,
 				CEBB4A862771C4FF00065A36 /* HTTPClientSpy.swift in Sources */,
 				CEBB4A76277090DB00065A36 /* PopularMoviesRequest+TestHelpers.swift in Sources */,

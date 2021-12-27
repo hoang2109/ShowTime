@@ -188,12 +188,14 @@ class RemotePopularMoviesLoaderTests: XCTestCase {
     }
     
     private func makeMovie(id: Int, title: String, imagePath: String) -> (item: Movie, json: [String: Any]) {
-        let item = Movie(id: id, title: title, imagePath: imagePath)
+        let item = Movie(id: id, title: title, imagePath: imagePath, rating: 7.5, overview: "overview")
         
         let json: [String: Any] = [
             "id": id,
             "title": title,
-            "poster_path": imagePath
+            "poster_path": imagePath,
+            "overview": "overview",
+            "vote_average": 7.5
         ]
         
         return (item, json)
