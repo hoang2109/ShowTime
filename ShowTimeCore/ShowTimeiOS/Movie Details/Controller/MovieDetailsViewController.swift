@@ -40,9 +40,43 @@ public final class MovieDetailsViewController: UIViewController {
                 self.imageDataLoader.load(from: self.makeURL(backdropImagePath), completion: { _ in
                     
                 })
+                self.updateUIState(movie)
             }
             
             self.movieDetailsView.isLoading = false
         }
+    }
+    
+    private func updateUIState(_ movie: Movie) {
+        movieDetailsView.titleLabel.text = movie.title
+        movieDetailsView.overviewLabel.text = movie.overview
+        movieDetailsView.metaLabel.text = makeMovieMeta(length: movie.length ?? 0, genres: movie.genres)
+    }
+    
+    private func makeMovieMeta(length: Int, genres: [String]) -> String {
+        let runTime = Double(length * 60).asString(style: .short)
+        let genres = genres.map { $0.capitalizingFirstLetter() }.joined(separator: ", ")
+        return "\(runTime) | \(genres)"
+    }
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
+}
+
+extension Double {
+    func asString(style: DateComponentsFormatter.UnitsStyle) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = style
+        formatter.calendar?.locale = Locale(identifier: "en-US ")
+        guard let formattedString = formatter.string(from: self) else { return "" }
+        return formattedString
     }
 }

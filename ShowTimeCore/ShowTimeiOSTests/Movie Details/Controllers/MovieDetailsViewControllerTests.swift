@@ -43,6 +43,18 @@ class MovieDetailsViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.requestedImageURLs, [anyURL().appendingPathComponent(item.backdropImagePath!)])
     }
     
+    func test_loadMovieDetailCompletion_renderSuccessfullyLoadedMovie() {
+        let item = Movie(id: 1, title: "a movie", imagePath: "imagePath", rating: 8, length: 100, genres: ["Action", "Adventure"], overview: "Overview", backdropImagePath: "backdropImagePath")
+        let (sut, loader) = makeSUT(1)
+        
+        sut.loadViewIfNeeded()
+        loader.completeMovieDetailLoading(with: .success(item))
+        
+        XCTAssertEqual(sut.titleText, item.title)
+        XCTAssertEqual(sut.overViewText, item.overview)
+        XCTAssertEqual(sut.metaText, "1 hr, 40 min | Action, Adventure")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(_ id: Int) -> (sut: MovieDetailsViewController, loader: LoaderSpy) {
@@ -97,5 +109,17 @@ class MovieDetailsViewControllerTests: XCTestCase {
 private extension MovieDetailsViewController {
     var isShowingLoadingIndicator: Bool {
         movieDetailsView.isLoading
+    }
+    
+    var titleText: String? {
+        movieDetailsView.titleLabel.text
+    }
+    
+    var metaText: String? {
+        movieDetailsView.metaLabel.text
+    }
+    
+    var overViewText: String? {
+        movieDetailsView.overviewLabel.text
     }
 }
