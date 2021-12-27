@@ -9,7 +9,6 @@ import Foundation
 import ShowTimeCore
 
 final class PopularMovieImageDataLoaderPresentationAdapter<View: PopularMovieViewProtocol, Image>: PopularMovieCellControllerDelegate where View.Image == Image {
-    
     var presenter: PopularMoviePresenter<View, Image>?
     
     private let model: Movie

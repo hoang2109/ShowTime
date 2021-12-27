@@ -50,6 +50,12 @@ extension PopularCollectionViewController {
         scrollView.contentOffset.y = 1000
         scrollViewDidScroll(scrollView)
     }
+    
+    func simulateTapOnMovie(at index: Int) {
+        let dl = collectionView.delegate
+        let indexPath = IndexPath(row: index, section: 0)
+        dl?.collectionView?(collectionView, didSelectItemAt: indexPath)
+    }
 }
 
 private class DraggingScrollView: UIScrollView {

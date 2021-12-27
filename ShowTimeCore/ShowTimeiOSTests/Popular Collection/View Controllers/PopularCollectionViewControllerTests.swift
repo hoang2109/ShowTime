@@ -332,11 +332,30 @@ class PopularCollectionViewControllerTests: XCTestCase {
         assertThat(sut, isRendering: page1.items)
     }
     
+    func test_selectItem_notifiesHandler() {
+        let movie1 = makeMovieItem(id: 1, title: "a movie", imagePath: "image1")
+        let movie2 = makeMovieItem(id: 2, title: "another movie", imagePath: "image2")
+        let page1 = makePopularCollection(items: [movie1, movie2], page: 1, totalPages: 2)
+        var selectedMovieID = [Int]()
+        let (sut, loader) = makeSUT() { movieID in
+            selectedMovieID.append(movieID)
+        }
+        sut.loadViewIfNeeded()
+        
+        loader.completePopularMoviesLoading(with: page1)
+    
+        sut.simulateTapOnMovie(at: 0)
+        XCTAssertEqual(selectedMovieID, [1])
+        
+        sut.simulateTapOnMovie(at: 1)
+        XCTAssertEqual(selectedMovieID, [1, 2])
+    }
+    
     // MARK: - Helper
     
-    private func makeSUT() -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
+    private func makeSUT(onMovieSelection: @escaping (Int) -> Void = { _ in }) -> (viewController: PopularCollectionViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let viewController = PopularCollectionUIComposer.compose(loader: loader, imageLoader: loader, baseImageURL: anyURL())
+        let viewController = PopularCollectionUIComposer.compose(loader: loader, imageLoader: loader, baseImageURL: anyURL(), onMovieSelection: onMovieSelection)
         
         return (viewController, loader)
     }

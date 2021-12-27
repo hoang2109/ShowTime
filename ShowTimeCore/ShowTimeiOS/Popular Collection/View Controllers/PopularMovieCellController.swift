@@ -17,9 +17,11 @@ final class PopularMovieCellController: PopularMovieViewProtocol {
     
     private let delegate: PopularMovieCellControllerDelegate
     private var cell: PopularMovieCell?
+    private var onSelection: () -> Void
 
-    init(delegate: PopularMovieCellControllerDelegate) {
+    init(delegate: PopularMovieCellControllerDelegate, onSelection: @escaping () -> Void) {
         self.delegate = delegate
+        self.onSelection = onSelection
     }
 
     func view(in collectionView: UICollectionView, forItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -41,6 +43,10 @@ final class PopularMovieCellController: PopularMovieViewProtocol {
         cell?.movieImageView.setImageAnimated(viewModel.image)
         cell?.retryButton.isHidden = !viewModel.shouldRetry
         cell?.onRetry = delegate.didRequestImage
+    }
+    
+    func select() {
+        onSelection()
     }
     
     private func releaseCellForReuse() {

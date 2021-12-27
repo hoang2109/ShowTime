@@ -125,6 +125,10 @@ public class PopularCollectionViewController: UICollectionViewController, Popula
         cancelCellControllerLoad(forItemAt: indexPath)
     }
     
+    public override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        cellController(forItemAt: indexPath).select()
+    }
+    
     private func cellController(forItemAt indexPath: IndexPath) -> PopularMovieCellController {
         return items[indexPath.row]
     }

@@ -13,7 +13,7 @@ import UIKit
 public class PopularCollectionUIComposer {
     private init() { }
     
-    public static func compose(loader: PopularMoviesLoader, imageLoader: ImageDataLoader, baseImageURL: URL) -> PopularCollectionViewController {
+    public static func compose(loader: PopularMoviesLoader, imageLoader: ImageDataLoader, baseImageURL: URL, onMovieSelection: @escaping (Int) -> ()) -> PopularCollectionViewController {
         let adapter = PopularCollectionViewPresentationAdapter(loader: MainQueueDispatchDecorator(decoratee: loader))
         let pagingController = PopularCollectionPagingController(delegate: adapter)
         let viewController = PopularCollectionViewController(pagingController: pagingController)
@@ -22,7 +22,7 @@ public class PopularCollectionUIComposer {
             popularCollectionView: PopularCollectionViewAdapter(
                 controller: viewController,
                 imageLoader: MainQueueDispatchDecorator(decoratee: imageLoader),
-                baseImageURL: baseImageURL),
+                baseImageURL: baseImageURL, onMovieSelection: onMovieSelection),
             loadingView: WeakRefVirtualProxy(viewController),
             pagingView: pagingController
         )
