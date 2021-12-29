@@ -7,4 +7,5 @@
 
 ## App Architecture
 
-<img width="1083" alt="Screenshot 2021-12-29 at 6 05 07 PM" src="https://user-images.githubusercontent.com/1131493/147650931-6ef0fc76-7564-4e83-b81d-aeb8d36fb8a6.png">
+<img width="1144" alt="Screenshot 2021-12-29 at 6 32 52 PM" src="https://user-images.githubusercontent.com/1131493/147653319-c50d2d35-1a8e-43ad-89f2-fe73bbd5d7d3.png">
+
