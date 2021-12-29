@@ -92,7 +92,7 @@ public final class MovieDetailsView: UIView {
     }
     
     private func configureUI() {
-        
+        backgroundColor = #colorLiteral(red: 0.1019607843, green: 0.1254901961, blue: 0.1882352941, alpha: 1)
         [titleLabel, metaLabel, overviewHeaderLabel, overviewLabel].forEach(vStack.addArrangedSubview)
         vStack.setCustomSpacing(64, after: metaLabel)
         

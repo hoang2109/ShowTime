@@ -42,10 +42,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         let imageLoader = RemoteImageDataLoader(client: client)
         
-        let viewController = PopularCollectionUIComposer.compose(loader: loader, imageLoader: imageLoader, baseImageURL: SceneDelegate.imageBaseURL) { _ in
-            
+        let viewController = PopularCollectionUIComposer.compose(loader: loader, imageLoader: imageLoader, baseImageURL: SceneDelegate.imageBaseURL) { [weak self] movieID in
+            guard let self = self else { return }
+            let movieDetailViewController = self.makeMovieDetailViewController(movieID: movieID, client: authzClient)
+            self.navController.pushViewController(movieDetailViewController, animated: true)
         }
         return viewController
+    }
+    
+    func makeMovieDetailViewController(movieID: Int, client: HTTPClient) -> MovieDetailsViewController {
+        let loader = RemoteMovieDetailLoader(client: client) { movieID in
+            let url = APIEndpoint.movieDetail(id: movieID).url(baseURL: SceneDelegate.baseURL)
+            return URLRequest(url: url)
+        }
+        let imageLoader = RemoteImageDataLoader(client: client)
+        
+        let viewController = MovieDetailsViewController(movieID: movieID, movieDetailsloader: MainQueueDispatchDecorator(decoratee: loader), imageDataLoader: MainQueueDispatchDecorator(decoratee: imageLoader)) { backdropPath in
+            URL(string: "https://image.tmdb.org/t/p/w1280/")!.appendingPathComponent(backdropPath)
+        }
+        return viewController
+    }
+}
+
+extension MainQueueDispatchDecorator: MovieDetailLoader where T == RemoteMovieDetailLoader {
+    public func load(_ id: Int, completion: @escaping (MovieDetailLoader.Result) -> Void) {
+        decoratee.load(id) { [weak self] result in
+            self?.dispatch {
+                completion(result)
+            }
+        }
     }
 }
 

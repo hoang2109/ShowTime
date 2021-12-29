@@ -32,21 +32,25 @@ public final class MovieDetailsViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureNavigation()
+        
         movieDetailsView.isLoading = true
         movieDetailsloader.load(movieID) { [weak self] result in
             guard let self = self else { return }
-            
             if let movie = try? result.get(), let backdropImagePath = movie.backdropImagePath {
                 self.imageDataLoader.load(from: self.makeURL(backdropImagePath), completion: { [weak self] result in
                     if let data = try? result.get() {
-                        self?.movieDetailsView.bakcgroundImageView.image = UIImage(data: data)
+                        self?.movieDetailsView.bakcgroundImageView.setImageAnimated(UIImage(data: data))
                     }
                 })
                 self.updateUIState(movie)
             }
-            
             self.movieDetailsView.isLoading = false
         }
+    }
+    
+    func configureNavigation() {
+        navigationController?.navigationBar.tintColor = .white
     }
     
     private func updateUIState(_ movie: Movie) {
