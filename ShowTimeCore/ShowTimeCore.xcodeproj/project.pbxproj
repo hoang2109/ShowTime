@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE86F37B277C4C660059C389 /* MovieDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86F37A277C4C660059C389 /* MovieDetailsPresenter.swift */; };
+		CE86F37D277C4EEB0059C389 /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86F37C277C4EEB0059C389 /* String+Helpers.swift */; };
+		CE86F37F277C4F190059C389 /* Double+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86F37E277C4F190059C389 /* Double+Helpers.swift */; };
+		CE86F381277C4F600059C389 /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86F380277C4F600059C389 /* MovieDetailsViewModel.swift */; };
+		CE86F384277C4FF60059C389 /* MovieDetailsUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86F383277C4FF60059C389 /* MovieDetailsUIComposer.swift */; };
+		CE86F387277C51140059C389 /* MovieDetailsViewPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86F386277C51140059C389 /* MovieDetailsViewPresentationAdapter.swift */; };
+		CE86F38B277C5A9C0059C389 /* MainQueueDispatchDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86F38A277C5A9C0059C389 /* MainQueueDispatchDecorator.swift */; };
 		CEBB4A59277057A600065A36 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A58277057A600065A36 /* Movie.swift */; };
 		CEBB4A5B2770584E00065A36 /* PopularCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A5A2770584E00065A36 /* PopularCollection.swift */; };
 		CEBB4A5D27705BCF00065A36 /* PopularMoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4A5C27705BCF00065A36 /* PopularMoviesLoader.swift */; };
@@ -49,7 +56,6 @@
 		CEBB4AE7277618A000065A36 /* PopularCollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AE6277618A000065A36 /* PopularCollectionViewAdapter.swift */; };
 		CEBB4AE92776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AE82776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift */; };
 		CEBB4AEB2776195800065A36 /* WeakRefVirtualProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4AEA2776195800065A36 /* WeakRefVirtualProxy.swift */; };
-		CEBB4BB22777470F00065A36 /* MainQueueDispatchDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */; };
 		CEBB4BB6277756E400065A36 /* PopularCollectionPagingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB5277756E400065A36 /* PopularCollectionPagingController.swift */; };
 		CEBB4BB827775D1D00065A36 /* PopularCollectionPagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BB727775D1D00065A36 /* PopularCollectionPagingViewModel.swift */; };
 		CEBB4BBC277865EE00065A36 /* MovieDetailLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB4BBB277865EE00065A36 /* MovieDetailLoader.swift */; };
@@ -102,6 +108,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CE86F37A277C4C660059C389 /* MovieDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsPresenter.swift; sourceTree = "<group>"; };
+		CE86F37C277C4EEB0059C389 /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
+		CE86F37E277C4F190059C389 /* Double+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Helpers.swift"; sourceTree = "<group>"; };
+		CE86F380277C4F600059C389 /* MovieDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModel.swift; sourceTree = "<group>"; };
+		CE86F383277C4FF60059C389 /* MovieDetailsUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsUIComposer.swift; sourceTree = "<group>"; };
+		CE86F386277C51140059C389 /* MovieDetailsViewPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewPresentationAdapter.swift; sourceTree = "<group>"; };
+		CE86F38A277C5A9C0059C389 /* MainQueueDispatchDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueDispatchDecorator.swift; sourceTree = "<group>"; };
 		CEBB4A58277057A600065A36 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		CEBB4A5A2770584E00065A36 /* PopularCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollection.swift; sourceTree = "<group>"; };
 		CEBB4A5C27705BCF00065A36 /* PopularMoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesLoader.swift; sourceTree = "<group>"; };
@@ -143,7 +156,6 @@
 		CEBB4AE6277618A000065A36 /* PopularCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewAdapter.swift; sourceTree = "<group>"; };
 		CEBB4AE82776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieImageDataLoaderPresentationAdapter.swift; sourceTree = "<group>"; };
 		CEBB4AEA2776195800065A36 /* WeakRefVirtualProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRefVirtualProxy.swift; sourceTree = "<group>"; };
-		CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueDispatchDecorator.swift; sourceTree = "<group>"; };
 		CEBB4BB5277756E400065A36 /* PopularCollectionPagingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionPagingController.swift; sourceTree = "<group>"; };
 		CEBB4BB727775D1D00065A36 /* PopularCollectionPagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionPagingViewModel.swift; sourceTree = "<group>"; };
 		CEBB4BBB277865EE00065A36 /* MovieDetailLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailLoader.swift; sourceTree = "<group>"; };
@@ -193,6 +205,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE86F379277C4C470059C389 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				CE86F37A277C4C660059C389 /* MovieDetailsPresenter.swift */,
+				CE86F380277C4F600059C389 /* MovieDetailsViewModel.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		CE86F382277C4FE50059C389 /* Composer */ = {
+			isa = PBXGroup;
+			children = (
+				CE86F383277C4FF60059C389 /* MovieDetailsUIComposer.swift */,
+			);
+			path = Composer;
+			sourceTree = "<group>";
+		};
+		CE86F385277C50DC0059C389 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				CE86F386277C51140059C389 /* MovieDetailsViewPresentationAdapter.swift */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
 		CEBB4A54277056CE00065A36 /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,8 +479,10 @@
 		CEBB4ADD2775D4FB00065A36 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				CE86F38A277C5A9C0059C389 /* MainQueueDispatchDecorator.swift */,
 				CEBB4AEA2776195800065A36 /* WeakRefVirtualProxy.swift */,
-				CEBB4BB12777470F00065A36 /* MainQueueDispatchDecorator.swift */,
+				CE86F37C277C4EEB0059C389 /* String+Helpers.swift */,
+				CE86F37E277C4F190059C389 /* Double+Helpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -502,6 +541,9 @@
 		CEBB4BC62779EADE00065A36 /* Movie Details */ = {
 			isa = PBXGroup;
 			children = (
+				CE86F385277C50DC0059C389 /* Adapters */,
+				CE86F382277C4FE50059C389 /* Composer */,
+				CE86F379277C4C470059C389 /* Presenter */,
 				CEBB4BCA2779EB3400065A36 /* Views */,
 				CEBB4BC92779EB1000065A36 /* Controller */,
 			);
@@ -766,25 +808,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEBB4BB22777470F00065A36 /* MainQueueDispatchDecorator.swift in Sources */,
+				CE86F387277C51140059C389 /* MovieDetailsViewPresentationAdapter.swift in Sources */,
 				CEBB4AE7277618A000065A36 /* PopularCollectionViewAdapter.swift in Sources */,
 				CEBB4AD82775CD3000065A36 /* PopularMoviePresenter.swift in Sources */,
 				CEBB4AEB2776195800065A36 /* WeakRefVirtualProxy.swift in Sources */,
 				CEBB4ADC2775CF0C00065A36 /* UIImageView+Animations.swift in Sources */,
 				CEBB4ACD2775CAAF00065A36 /* PopularMovieCellController.swift in Sources */,
+				CE86F38B277C5A9C0059C389 /* MainQueueDispatchDecorator.swift in Sources */,
+				CE86F381277C4F600059C389 /* MovieDetailsViewModel.swift in Sources */,
 				CEBB4AB92775C66900065A36 /* UIView+Shimmering.swift in Sources */,
 				CEBB4AE92776190700065A36 /* PopularMovieImageDataLoaderPresentationAdapter.swift in Sources */,
 				CEBB4AB62775C5EC00065A36 /* PopularCollectionViewController.swift in Sources */,
 				CEBB4BB827775D1D00065A36 /* PopularCollectionPagingViewModel.swift in Sources */,
+				CE86F384277C4FF60059C389 /* MovieDetailsUIComposer.swift in Sources */,
 				CEBB4AE227760C7C00065A36 /* PopularCollectionUIComposer.swift in Sources */,
 				CEBB4AD62775CC0F00065A36 /* PopularCollectionViewPresenter.swift in Sources */,
 				CEBB4AD22775CB9300065A36 /* PopularCollectionViewModel.swift in Sources */,
 				CEBB4AB32775C5B700065A36 /* PopularMovieCell.swift in Sources */,
 				CEBB4BB6277756E400065A36 /* PopularCollectionPagingController.swift in Sources */,
 				CEBB4AD42775CBE400065A36 /* PopularCollectionLoadingViewModel.swift in Sources */,
+				CE86F37F277C4F190059C389 /* Double+Helpers.swift in Sources */,
+				CE86F37B277C4C660059C389 /* MovieDetailsPresenter.swift in Sources */,
 				CEBB4BCC2779EB4100065A36 /* MovieDetailsView.swift in Sources */,
 				CEBB4BC82779EAEE00065A36 /* MovieDetailsViewController.swift in Sources */,
 				CEBB4AE52776187B00065A36 /* PopularCollectionViewPresentationAdapter.swift in Sources */,
+				CE86F37D277C4EEB0059C389 /* String+Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

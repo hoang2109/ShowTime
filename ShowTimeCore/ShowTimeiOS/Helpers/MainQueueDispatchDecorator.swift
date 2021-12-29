@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ShowTimeCore
 
 public final class MainQueueDispatchDecorator<T> {
     
@@ -21,5 +22,31 @@ public final class MainQueueDispatchDecorator<T> {
         }
         
         completion()
+    }
+}
+
+extension MainQueueDispatchDecorator: PopularMoviesLoader where T == PopularMoviesLoader {
+    public func load(_ request: PopularMoviesRequest, completion: @escaping (PopularMoviesLoader.Result) -> Void) {
+        decoratee.load(request, completion: { [weak self] result in
+            self?.dispatch { completion(result) }
+        })
+    }
+}
+
+extension MainQueueDispatchDecorator: ImageDataLoader where T == ImageDataLoader {
+    public func load(from imageURL: URL, completion: @escaping (ImageDataLoader.Result) -> Void) -> ImageDataLoaderTask {
+        decoratee.load(from: imageURL, completion: { [weak self] result in
+            self?.dispatch { completion(result) }
+        })
+    }
+}
+
+extension MainQueueDispatchDecorator: MovieDetailLoader where T == MovieDetailLoader {
+    public func load(_ id: Int, completion: @escaping (MovieDetailLoader.Result) -> Void) {
+        decoratee.load(id) { [weak self] result in
+            self?.dispatch {
+                completion(result)
+            }
+        }
     }
 }

@@ -9,20 +9,18 @@ import Foundation
 import UIKit
 import ShowTimeCore
 
+public protocol MovieDetailsViewControllerDelegate {
+    func didRequestMovieDetailsData()
+}
+
 public final class MovieDetailsViewController: UIViewController {
     
     private(set) public lazy var movieDetailsView = view as! MovieDetailsView
-    private var movieID: Int!
-    private var movieDetailsloader: MovieDetailLoader!
-    private var imageDataLoader: ImageDataLoader!
-    private var makeURL: ((String) -> URL)!
+    private var delegate: MovieDetailsViewControllerDelegate?
     
-    public convenience init(movieID: Int, movieDetailsloader: MovieDetailLoader, imageDataLoader: ImageDataLoader, makeURL: @escaping (String) -> URL) {
+    public convenience init(delegate: MovieDetailsViewControllerDelegate) {
         self.init(nibName: nil, bundle: nil)
-        self.movieID = movieID
-        self.movieDetailsloader = movieDetailsloader
-        self.imageDataLoader = imageDataLoader
-        self.makeURL = makeURL
+        self.delegate = delegate
     }
     
     public override func loadView() {
@@ -33,56 +31,20 @@ public final class MovieDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         configureNavigation()
-        
-        movieDetailsView.isLoading = true
-        movieDetailsloader.load(movieID) { [weak self] result in
-            guard let self = self else { return }
-            if let movie = try? result.get(), let backdropImagePath = movie.backdropImagePath {
-                self.imageDataLoader.load(from: self.makeURL(backdropImagePath), completion: { [weak self] result in
-                    if let data = try? result.get() {
-                        self?.movieDetailsView.bakcgroundImageView.setImageAnimated(UIImage(data: data))
-                    }
-                })
-                self.updateUIState(movie)
-            }
-            self.movieDetailsView.isLoading = false
-        }
+        delegate?.didRequestMovieDetailsData()
     }
     
     func configureNavigation() {
         navigationController?.navigationBar.tintColor = .white
     }
-    
-    private func updateUIState(_ movie: Movie) {
-        movieDetailsView.titleLabel.text = movie.title
-        movieDetailsView.overviewLabel.text = movie.overview
-        movieDetailsView.metaLabel.text = makeMovieMeta(length: movie.length ?? 0, genres: movie.genres)
-    }
-    
-    private func makeMovieMeta(length: Int, genres: [String]) -> String {
-        let runTime = Double(length * 60).asString(style: .short)
-        let genres = genres.map { $0.capitalizingFirstLetter() }.joined(separator: ", ")
-        return "\(runTime) | \(genres)"
-    }
 }
 
-extension String {
-    func capitalizingFirstLetter() -> String {
-        return prefix(1).capitalized + dropFirst()
-    }
-    
-    mutating func capitalizeFirstLetter() {
-        self = self.capitalizingFirstLetter()
-    }
-}
-
-extension Double {
-    func asString(style: DateComponentsFormatter.UnitsStyle) -> String {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = style
-        formatter.calendar?.locale = Locale(identifier: "en-US ")
-        guard let formattedString = formatter.string(from: self) else { return "" }
-        return formattedString
+extension MovieDetailsViewController: MovieDetailsViewProtocol {
+    func display(_ viewModel: MovieDetailsViewModel<UIImage>) {
+        movieDetailsView.isLoading = viewModel.isLoading
+        movieDetailsView.titleLabel.text = viewModel.title
+        movieDetailsView.overviewLabel.text = viewModel.overView
+        movieDetailsView.metaLabel.text = viewModel.meta
+        movieDetailsView.bakcgroundImageView.setImageAnimated(viewModel.image)
     }
 }

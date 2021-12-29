@@ -44,7 +44,7 @@ class MovieDetailsViewControllerTests: XCTestCase {
     }
     
     func test_loadMovieDetailCompletion_renderSuccessfullyLoadedMovie() {
-        let item = Movie(id: 1, title: "a movie", imagePath: "imagePath", rating: 8, length: 100, genres: ["Action", "Adventure"], overview: "Overview", backdropImagePath: "backdropImagePath")
+        let item = makeMovieDetails(id: 1, title: "a movie", imagePath: "imagePath", rating: 8, length: 100, genres: ["Action", "Adventure"], overview: "Overview", backdropImagePath: "backdropImagePath")
         let (sut, loader) = makeSUT(1)
         
         sut.loadViewIfNeeded()
@@ -56,7 +56,7 @@ class MovieDetailsViewControllerTests: XCTestCase {
     }
     
     func test_loadImageCompletion_renderSuccessfullyLoadedImage() {
-        let item = Movie(id: 1, title: "a movie", imagePath: "imagePath", rating: 8, length: 100, genres: ["Action", "Adventure"], overview: "Overview", backdropImagePath: "backdropImagePath")
+        let item = makeMovieDetails(id: 1, title: "a movie", imagePath: "imagePath", rating: 8, length: 100, genres: ["Action", "Adventure"], overview: "Overview", backdropImagePath: "backdropImagePath")
         let imageData = UIImage.make(withColor: .blue).pngData()!
         let (sut, loader) = makeSUT(1)
         
@@ -67,13 +67,41 @@ class MovieDetailsViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.renderedImage, imageData)
     }
     
+    func test_loadMovieDetailCompletion_dispatchesFromBackgroundToMainThread() {
+        let item = makeMovieDetails(id: 1, title: "a movie", imagePath: "imagePath", rating: 8, length: 100, genres: ["Action", "Adventure"], overview: "Overview", backdropImagePath: "backdropImagePath")
+        
+        let (sut, loader) = makeSUT(1)
+        sut.loadViewIfNeeded()
+
+        let exp = expectation(description: "Wait for background queue")
+        DispatchQueue.global().async {
+            loader.completeMovieDetailLoading(with: .success(item))
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func test_loadImageDataCompletion_dispatchesFromBackgroundToMainThread() {
+        let item = makeMovieDetails(id: 1, title: "a movie", imagePath: "imagePath", rating: 8, length: 100, genres: ["Action", "Adventure"], overview: "Overview", backdropImagePath: "backdropImagePath")
+        
+        let (sut, loader) = makeSUT(1)
+
+        sut.loadViewIfNeeded()
+        loader.completeMovieDetailLoading(with: .success(item))
+
+        let exp = expectation(description: "Wait for background queue")
+        DispatchQueue.global().async {
+            loader.completeImageDataLoading(with: .success(UIImage.make(withColor: .red).pngData()!))
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(_ id: Int, file: StaticString = #file, line: UInt = #line) -> (sut: MovieDetailsViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = MovieDetailsViewController(movieID: id, movieDetailsloader: loader, imageDataLoader: loader) { [unowned self] imagePath in
-            self.anyURL().appendingPathComponent(imagePath)
-        }
+        let sut = MovieDetailsUIComposer.compose(movieID: id, movieDetailsLoader: loader, imageDataLoader: loader, imageBaseURL: anyURL())
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)
